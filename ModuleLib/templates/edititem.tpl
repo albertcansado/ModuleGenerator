@@ -4,6 +4,11 @@
 
 {literal}
     <style type="text/css">
+        .label__helper {
+            color: #777;
+            font-size: 11px;
+            margin-left: 5px;
+        }
         .scrollable {
             display: none;
             width: 90%;

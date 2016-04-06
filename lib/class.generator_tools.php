@@ -42,6 +42,41 @@ class generator_tools {
         
     }
 
+    /**
+     * Get field types
+     * @return array Returns an array of field types
+     */
+    public static function get_field_types() {
+
+        $module = cms_utils::get_module('ModuleGenerator');
+
+        $types = array(
+            'textbox' => $module->Lang('textbox'),
+            'checkbox' => $module->Lang('checkbox'),
+            'textarea' => $module->Lang('textarea'),
+            'select_date' => $module->Lang('select_date'),
+            'upload_file' => $module->Lang('upload_file'),
+            'select_file' => $module->Lang('select_file'),
+            'file_picker' => $module->Lang('file_picker'),
+            'dropdown' => $module->Lang('dropdown'),
+            'dropdown_from_udt' => $module->Lang('dropdown_from_udt'),
+            'dropdownfrommodule' => $module->Lang('dropdownfrommodule'),
+            'module' => $module->Lang('module'),
+            'module_link' => $module->Lang('module_link'),
+            'page' => $module->Lang('page'),
+            'color_picker' => $module->Lang('color_picker'),
+            'static' => $module->Lang('static'),
+            'tab' => $module->Lang('tab'),
+            'key_value' => $module->Lang('key_value'),
+            'hr' => $module->Lang('hr'),
+            'lookup' => $module->Lang('lookup'),
+            'json' => $module->Lang('json'),
+            'video' => $module->Lang('video')
+        );
+
+        return $types;
+    }
+
     public static function get_field_defs($mod, $type = null, $filter_frontend = null, $filter_admin = null, $section = 'items') {
         $parms = array();
         $db = cmsms()->GetDb();
@@ -1244,40 +1279,6 @@ class generator_tools {
         $alias = trim($alias, '_');
 
         return $alias;
-    }
-
-    /**
-     * Get field types
-     * @return array Returns an array of field types
-     */
-    public static function get_field_types() {
-
-        $module = cms_utils::get_module('ModuleGenerator');
-
-        $types = array(
-            'textbox' => $module->Lang('textbox'),
-            'checkbox' => $module->Lang('checkbox'),
-            'textarea' => $module->Lang('textarea'),
-            'select_date' => $module->Lang('select_date'),
-            'upload_file' => $module->Lang('upload_file'),
-            'select_file' => $module->Lang('select_file'),
-            'file_picker' => $module->Lang('file_picker'),
-            'dropdown' => $module->Lang('dropdown'),
-            'dropdown_from_udt' => $module->Lang('dropdown_from_udt'),
-            'dropdownfrommodule' => $module->Lang('dropdownfrommodule'),
-            'module' => $module->Lang('module'),
-            'module_link' => $module->Lang('module_link'),
-            'page' => $module->Lang('page'),
-            'color_picker' => $module->Lang('color_picker'),
-            'static' => $module->Lang('static'),
-            'tab' => $module->Lang('tab'),
-            'key_value' => $module->Lang('key_value'),
-            'hr' => $module->Lang('hr'),
-            'lookup' => $module->Lang('lookup'),
-            'json' => $module->Lang('json')
-        );
-
-        return $types;
     }
 
     /**

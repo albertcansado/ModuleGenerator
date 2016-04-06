@@ -163,6 +163,12 @@ $lang['json_add'] = 'Add';
 $lang['json_empty_headers'] = 'Please, define headers in extra field input on Field Definition';
 $lang['json_empty_row'] = 'No items to display';
 
+// Video
+$lang['video'] = 'Video';
+$lang['video_label_id'] =  'Video ID';
+$lang['video_help_id'] =  'Only video id (Youtube ex. \'o6HpQwoEhXU\')';
+$lang['video_label_type'] =  'Video Type';
+
 // field definitions
 $lang['editfielddef'] = 'Edit Field Definition';
 $lang['addfielddef'] = 'Add Field Definition';

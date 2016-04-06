@@ -19,7 +19,7 @@ $lang['create_module'] = 'Crear módulo nuevo';
 
 $lang['detail_page'] = 'Página de detalle';
 $lang['detail_template'] = 'Plantilla de detalle';
-$lang['warning_preview'] = 'Atención: Este panel de vista previa se comporta como una ventana de navegador que le permite navegar fuera de la página inicial. Sin embargo, si usted hace eso, usted puede experimentar un comportamiento inesperado. Navegando fuera de la página inicial y regresar puedo no dar los resultados esperados <br/> <strong> Nota: </strong> La vista previa no sube los archivos que haya seleccionado'; 
+$lang['warning_preview'] = 'Atención: Este panel de vista previa se comporta como una ventana de navegador que le permite navegar fuera de la página inicial. Sin embargo, si usted hace eso, usted puede experimentar un comportamiento inesperado. Navegando fuera de la página inicial y regresar puedo no dar los resultados esperados <br/> <strong> Nota: </strong> La vista previa no sube los archivos que haya seleccionado';
 $lang['article'] = 'Artículo';
 $lang['preview'] = 'Vista previa';
 $lang['info_detail_returnid'] = 'This preference is used to determine a page (and therefore a template) to use to view detail pages.  Individualized News Detail URLS will not work if this parameter is not set to a valid page.  Additionally, if this preference is set, and no detailpage parameter is provided on the news tag, then this value will be used for detail links';
@@ -152,6 +152,12 @@ $lang['json'] = 'Tabla';
 $lang['json_add'] = 'Añadir';
 $lang['json_empty_headers'] = 'Por favor, defina el encabezado en el campo extra del campo en la sección de Campos de Definición.';
 $lang['json_empty_row'] = 'Hay hay elementos';
+
+// Video
+$lang['video'] = 'Video';
+$lang['video_label_id'] =  'Video ID';
+$lang['video_help_id'] =  'Sólo el id del video (Youtube ej. \'o6HpQwoEhXU\')';
+$lang['video_label_type'] =  'Tipo de Video';
 
 // file handling
 $lang['error_upload'] = 'Ha ocurido un error durante la subida del archivo';
@@ -320,18 +326,18 @@ $lang['alias_invalid'] = 'El alias es inválido. Debe ser un nombre de variable 
 
 $lang['changelog'] = '<ul>
 <li>Version 2.2.3 september, 2012  - nothing change, but fix xml in repositary</li>
-<li>Version 2.2.2 august, 2012 
-<br />Moved and purification option tab. 
+<li>Version 2.2.2 august, 2012
+<br />Moved and purification option tab.
 <br />Removed default params for default and detail aciton. Use CGExtension plugin cge_module_hint (see help)</li>
-<li>Version 2.0 27. februar, 2012 
+<li>Version 2.0 27. februar, 2012
 <br />add gallery - mutliupload, sorting, resize
 </li>
-<li>Version 1.9 Januar, 2012 
+<li>Version 1.9 Januar, 2012
 <br />add category custom fields, moved to their own section.
 <br /> upgrade script compatible with 1.8.1 version
 <br /> fix some issues
 </li>
-<li>Version 1.8.1 Januar, 2012 
+<li>Version 1.8.1 Januar, 2012
 <br />add option for preview in admin
 <br />add preview icon in admin
 <br />add option for copy item

@@ -154,6 +154,10 @@ class generator_filters {
                     case 'json':
                         $custom_flds[$custom_fld]['headers'] = generator_tools::get_extra_tableheaders($instructions);
                         break;
+                    case 'video':
+                        $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_size($instructions);
+                        $custom_flds[$custom_fld]['max_length'] = generator_tools::get_extra_max_length($instructions);
+                        break;
                 }
             }
         }
@@ -215,6 +219,9 @@ class generator_filters {
                 break;
             case 'json':
                 $newValue = array_values(json_decode($field['value'], true));
+                break;
+            case 'video':
+                $newValue = json_decode($field['value'], true);
                 break;
             case 'textbox':
             case 'dropdown_from_udt':
@@ -756,6 +763,38 @@ jQuery(document).ready(function($){
                         array('{{selector}}', '{{addBtn}}', '{{table}}', '{{orderBtn}}', '{{textarea}}', '{{js}}'),
                         array($selector, $addBtn, $table, $orderBtn, $hiddenTextarea, $js),
                         '<div class="{{selector}}">{{addBtn}}{{table}}{{orderBtn}}{{textarea}}{{js}}</div>'
+                    );
+                    break;
+                case 'video':
+
+                    if (!empty($value)) {
+                        $value = json_decode($value, true);
+                    } else {
+                        $value = array('id' => '', 'type' => -1);
+                    }
+
+                    // Input Text
+                    $size = !empty($custom_fld['size']) ? $custom_fld['size'] : 50;
+                    $maxLength = !empty($custom_fld['max_length']) ? $custom_fld['max_length'] : 255;
+                    $input = $mod->CreateInputText($id, $name . '[id]', $value['id'], $size, $maxLength);
+
+                    // Select
+                    $options = array(
+                        'Youtube' => 'youtube',
+                        'Vimeo' => 'vimeo'
+                    );
+                    $select = $mod->CreateInputDropdown($id, $name . '[type]', $options, -1, $value['type']);
+
+                    $obj->field = str_replace(
+                        array('{{labelId}}', '{{helpId}}', '{{input}}', '{{labelType}}', '{{select}}'),
+                        array(
+                            $mod->Lang('video_label_id'),
+                            $mod->Lang('video_help_id'),
+                            $input,
+                            $mod->Lang('video_label_type'),
+                            $select
+                        ),
+                        '<div class="row"><div class="grid_6"><label>{{labelId}}<span class="label__helper">{{helpId}}</span></label><br>{{input}}</div><div class="grid_6"><label>{{labelType}}</label><br>{{select}}</div></div>'
                     );
                     break;
             }

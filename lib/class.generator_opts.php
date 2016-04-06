@@ -76,6 +76,9 @@ class generator_opts {
 
     public static function init($mod) {
 
+        $smarty = cmsms()->GetSmarty();
+        $smarty->register_function('video',array('generator_smarty_plugins','video'));
+
         $mod->RegisterModulePlugin();
         $mod->RestrictUnknownParams();
 

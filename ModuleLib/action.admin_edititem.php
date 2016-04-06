@@ -230,6 +230,7 @@ if (isset($params['preview'])) {
     $featured = (isset($params['featured']) ? 1 : 0);
     $usedcategory = (isset($params['category']) ? $params['category'] : '');
 
+
     // check title
     if ($title == '' && $this->GetPreference('item_title_edit')) {
         $errors[] = $this->Lang('item_title_empty');
@@ -255,6 +256,16 @@ if (isset($params['preview'])) {
             if (isset($custom_flds[$fldid]['max_length']) && mb_strlen($value) > $custom_flds[$fldid]['max_length']) {
                 $errors[] = $this->Lang('too_long') . ' (' . $custom_flds[$fldid]['name'] . ')';
                 break;
+            }
+
+            // Video fielddef
+            if (is_array($value) && $custom_flds[$fldid]['type'] === 'video') {
+                if ($custom_flds[$fldid]['required'] && (empty($value['id']) || empty($value['type']))) {
+                    $errors[] = $this->Lang('required_field_empty') . ' (' . $custom_flds[$fldid]['name'] . ')';
+                    break;
+                }
+
+                $params['customfield'][$fldid] = json_encode($value);
             }
 
             // options
