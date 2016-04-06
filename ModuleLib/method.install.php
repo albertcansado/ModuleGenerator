@@ -67,7 +67,7 @@ $fields = '
     filter_frontend I(1),
     filter_admin I(1),
     searchable I(1),
-    extra C(255)
+    extra X
 ';
 
 $sqlarray = $dict->CreateTableSQL(cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_fielddef', $fields, $taboptarray);
