@@ -102,7 +102,7 @@ class generator_fields {
         $db = cmsms()->GetDb();
         $fieldvals = array();
 
-        $tmp_id = md5(serialize(__FUNCTION__ . $mod->GetName() . $item_id . implode(',',$params)));
+        $tmp_id = md5(serialize(__FUNCTION__ . $mod->GetName() . $item_id . json_encode($params)));
         if (isset(self::$_fieldsvals[$tmp_id]))
             return self::$_fieldsvals[$tmp_id];
 
