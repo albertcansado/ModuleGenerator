@@ -1,6 +1,24 @@
 # ModuleGenerator
-My own copy. **NOT OFFICIAL**
+My own copy. **NOT OFFICIAL**, but stable
 
-CMSMS Version > 1.11 not 2.0
+CMSMS Version > 1.11 not 2.x
+
+## Dependencies
+* ExtendedTools
+* CGExtensions
+* CGSmartImage (Optional)
+
+## New Fielddefs
+* hr
+* Key Value (Table)
+* Lookup (Geolocation)
+* Table
+* Video (Add Youtube and Vimeo Videos)
+
+## New Features
+* Add Select from editItem view
+* Multiselect
+* Depth options on summary view
+* fix many bugs
 
 ...
