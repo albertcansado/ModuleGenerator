@@ -7,6 +7,8 @@
     {foreach from=$item->fields item=fielddef}
         {if $fielddef.type == 'upload_file' || $fielddef.type == 'select_file'}
             {$fielddef.name}: <a href="{$item->file_location}/{$fielddef.value}">{$fielddef.value}</a><br />
+        {elseif $fielddef.value|is_array}
+            {$fielddef.name}: {$fielddef.value|print_r}<br />
         {else}
             {$fielddef.name}: {$fielddef.value}<br />
         {/if}
