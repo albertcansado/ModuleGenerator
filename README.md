@@ -4,7 +4,7 @@ My own copy. **NOT OFFICIAL**, but stable
 CMSMS Version > 1.11 not 2.x
 
 ## Dependencies
-* ExtendedTools
+* [ExtendedTools](https://github.com/albertcansado/ExtendedTools)
 * CGExtensions
 * CGSmartImage (Optional)
 
