@@ -14,7 +14,7 @@
             {foreach from=$item->fielddefs item=fielddef}
                 {if $fielddef.type == 'upload_file' || $fielddef.type == 'select_file'}
                     {$fielddef.name}: <a href="{$item->file_location}/{$fielddef.value}">{$fielddef.value}</a><br />
-                    {*CGSmartImage src=$item.file_location|cat:'/':$fielddef.value quality=90 filter_resize='w,500' alt=$item->title*}
+                    {*CGSmartImage src=$item->file_location|cat:'/':$fielddef.value quality=90 filter_resize='w,500' alt=$item->title*}
                 {elseif $fielddef.value|is_array}
                     {$fielddef.name}: {$fielddef.value|print_r}<br />
                 {else}
