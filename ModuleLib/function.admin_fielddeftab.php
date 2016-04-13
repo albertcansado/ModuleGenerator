@@ -28,6 +28,9 @@ if (is_array($fields) && count($fields) > 0) {
         $onerow->name = $this->CreateLink($id, 'admin_editfielddef', $returnid, $row['name'], array('fielddef_id' => $row['fielddef_id']));
         $onerow->alias = $row['alias'];
         $onerow->type = $this->Lang($row['type']);
+        if ($row['type'] === 'dropdown' && strpos($row['extra'], 'multiple[') !== false) {
+            $onerow->type .= ' (M)';
+        }
         $onerow->required = $row['required'];
         $onerow->editview = $row['editview'];
         $onerow->hidename = $row['hidename'];
