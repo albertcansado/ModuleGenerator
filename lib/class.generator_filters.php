@@ -73,6 +73,7 @@ class generator_filters {
                         $custom_flds[$custom_fld]['options'] = generator_tools::get_extra_options($instructions);
                         $custom_flds[$custom_fld]['allowAdd'] = generator_tools::get_extra_customBool($instructions, 'allowAdd');
                         $custom_flds[$custom_fld]['multiple'] = generator_tools::get_extra_multiple($instructions);
+                        $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_size($instructions);
                         break;
 
                     case 'dropdown_from_udt':
@@ -358,6 +359,7 @@ class generator_filters {
                     break;
                 case 'dropdown':
                     $isMultiple = (isset($custom_fld['multiple']) && is_int($custom_fld['multiple']) && !$frontend);
+                    $size = (!empty($custom_fld['size'])) ? (int)$custom_fld['size'] : 6;
                     
                     $options = array();
                     if (!$isMultiple) {
@@ -378,7 +380,7 @@ class generator_filters {
                     $obj->options = $options;
 
                     if ($isMultiple) {
-                        $obj->field = $mod->CreateInputSelectList($id, $name, $options, explode(',', $obj->value), $custom_fld['multiple']);
+                        $obj->field = $mod->CreateInputSelectList($id, $name, $options, explode(',', $obj->value), $size);
                     } else {
                         $obj->field = $mod->CreateInputDropdown($id, $name, $options, -1, $value);
                     }
