@@ -88,7 +88,7 @@ $dict->ExecuteSQLArray($sqlarray);
 
 $fields = '
     item_id I KEY NOT null,
-    value I KEY NOT null,
+    value I KEY NOT null
 ';
 
 $sqlarray = $dict->CreateTableSQL(cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_item_extra', $fields, $taboptarray);
