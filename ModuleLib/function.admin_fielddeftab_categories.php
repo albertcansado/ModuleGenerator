@@ -20,7 +20,7 @@ $fields = generator_tools::get_field_defs($this, null, null, null, 'categories')
 $rowclass = 'row1';
 $entryarray = array();
 
-if (is_array($fields) && count($fields) > 0) {    
+if (is_array($fields) && count($fields) > 0) {
     foreach ($fields as $row) {
         $onerow = new stdClass();
         $onerow->id = $row['fielddef_id'];
@@ -28,8 +28,8 @@ if (is_array($fields) && count($fields) > 0) {
         $onerow->alias = $row['alias'];
         $onerow->type = $this->Lang($row['type']);
         $onerow->required = $row['required'];
-        $onerow->frontend = $row['frontend'];
         $onerow->editview = $row['editview'];
+        $onerow->hidename = $row['hidename'];
         $onerow->filter_frontend = $row['filter_frontend'];
         $onerow->filter_admin = $row['filter_admin'];
         $onerow->searchable = $row['searchable'];
