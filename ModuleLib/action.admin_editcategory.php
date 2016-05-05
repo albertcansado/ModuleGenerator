@@ -46,6 +46,10 @@ if (isset($params['name'])) {
         $errors[] = $this->ShowErrors($this->Lang('nonamegiven'));
     }
 
+    if (empty($alias)) {
+        $alias = munge_string_to_url($name, true);
+    }
+
     if (isset($params['customfield'])) {
         foreach ($params['customfield'] as $fldid => $value) {
 
@@ -91,7 +95,7 @@ if (isset($params['name'])) {
             $eventName = 'CategoryEdited';
         } else {
             $time = $db->DBTimeStamp(time());
-            $position = $db->GetOne('SELECT MAX(position) FROM ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_categories WHERE parent_id = ?', array(intval($parentid)));            
+            $position = $db->GetOne('SELECT MAX(position) FROM ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_categories WHERE parent_id = ?', array(intval($parentid)));
             $query = 'INSERT INTO ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_categories (category_id, category_name, category_alias, usergroup, parent_id, position, create_date, modified_date) VALUES (?,?,?,?,?,?,' . $time . ',' . $time . ')';
             $parms = array($catid, $name, $alias, $usergroup, intval($parentid), $position);
             $db->Execute($query, $parms);
