@@ -32,7 +32,7 @@ $this->smarty->assign_by_ref('items', $entryarray);
 $this->smarty->assign('itemcount', count($entryarray));
 
 #Setup links
-$this->smarty->assign('addlink', $this->CreateLink($id, 'admin_editcategory', $returnid, $this->Lang('addcategory'), array(), '', false, false, 'class="pageoptions"'));
+$this->smarty->assign('addlink', $this->CreateLink($id, 'admin_editcategory', $returnid, $admintheme->DisplayImage('icons/system/newobject.gif', $this->Lang('addcategory'), '', '', 'systemicon') . ' ' . $this->Lang('addcategory'), array(), '', false, false, 'class="pageoptions"'));
 $this->smarty->assign('reorder', $this->CreateLink($id, 'admin_ordercategory', $returnid, $this->Lang('reorder'), array(), '', false, false, 'class="pageoptions"'));
 
 $this->smarty->assign('categorytext', $this->Lang('category'));
