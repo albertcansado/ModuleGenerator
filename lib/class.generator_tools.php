@@ -281,23 +281,25 @@ class generator_tools {
             }
             $q2 .= ' AND active = \'1\'';
 
-            $dbres2 = $db->Execute($q2, array($row['category_id']));
-            $count = $dbres2->FetchRow();
+            $count = $db->GetRow($q2, array($row['category_id']));
 
             //Count children categories items
             $q3 = "SELECT COUNT(item_id) as cnt FROM " . cms_db_prefix() . "module_" . $mod->_GetModuleAlias() . "_item WHERE category_id IN (SELECT category_id FROM " . cms_db_prefix() . "module_" . $mod->_GetModuleAlias() . "_categories WHERE hierarchy_position LIKE ?) AND active = 1";
-            $dbres3 = $db->Execute($q3, array($row['hierarchy_position'] . '%'));
-            $countAll = $dbres3->FetchRow();
+            $countAll = $db->GetRow($q3, array($row['hierarchy_position'] . '%'));
 
             //Child have another child?
             $q4 = "SELECT COUNT(*) as cnt FROM " . cms_db_prefix() . "module_" . $mod->_GetModuleAlias() . "_categories WHERE parent_id IN (SELECT category_id FROM " . cms_db_prefix() . "module_" . $mod->_GetModuleAlias() . "_categories WHERE hierarchy_position LIKE ?)";
-            $dbres4 = $db->Execute($q4, array($row['hierarchy_position'] . '.%'));
-            $leaf = $dbres4->FetchRow();
+            $leaf = $db->GetRow($q4, array($row['hierarchy_position'] . '.%'));
+
+            // Has Children
+            $q5 = "SELECT COUNT(*) as cnt FROM " . cms_db_prefix() . "module_" . $mod->_GetModuleAlias() . "_categories WHERE hierarchy LIKE ?";
+            $hasChildren = $db->GetRow($q5, array($row['hierarchy'] . '.%'));
 
             $row['index'] = $rowcounter++;
             $row['count'] = $count['cnt'];
             $row['countAll'] = $countAll['cnt'];
-            $row['leaf'] = ((int)$leaf['cnt'] > 0) ? 1 : 0;
+            $row['hasChildren'] = ((int)$hasChildren['cnt'] > 0) ? 1 : 0;
+            //$row['leaf'] = ((int)$leaf['cnt'] > 0) ? 1 : 0;
             $row['prevdepth'] = $depth;
             $depth = count(explode('.', $row['hierarchy_position']));
             $row['depth'] = $depth;
