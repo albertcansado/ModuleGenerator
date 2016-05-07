@@ -72,7 +72,7 @@ class generator_filters {
                     case 'dropdown':
                         $custom_flds[$custom_fld]['options'] = generator_tools::get_extra_options($instructions);
                         $custom_flds[$custom_fld]['allowAdd'] = generator_tools::get_extra_customBool($instructions, 'allowAdd');
-                        $custom_flds[$custom_fld]['multiple'] = generator_tools::get_extra_multiple($instructions);
+                        $custom_flds[$custom_fld]['multiple'] = generator_tools::get_extra_customBool($instructions, 'multiple');
                         $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_size($instructions);
                         break;
 
@@ -86,9 +86,10 @@ class generator_filters {
 
                     case 'module':
                         $custom_flds[$custom_fld]['select_default'] = generator_tools::get_extra_selectdefault($instructions);
-                        $custom_flds[$custom_fld]['multiple'] = generator_tools::get_extra_multiple($instructions);
+                        $custom_flds[$custom_fld]['multiple'] = generator_tools::get_extra_customBool($instructions, 'multiple');
                         $custom_flds[$custom_fld]['params'] = generator_tools::get_extra_moduleparams($instructions);
                         $custom_flds[$custom_fld]['module_view'] = generator_tools::get_extra_module_view($instructions);
+                        $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_size($instructions);
                         break;
 
                     case 'module_link':
@@ -184,7 +185,7 @@ class generator_filters {
                 }
                 break;
             case 'lookup':
-                
+
                 $values = array_map('strrev', explode(',', strrev($field['value']), 3));
                 if (is_array($values) && count($values) == 3) {
                     $newValue = array(
@@ -266,7 +267,7 @@ class generator_filters {
         foreach ($this->custom_fields as $custom_fld) {
             if (!$custom_fld['fielddef_id'])
                 continue;
-            
+
             $obj = new StdClass();
             $name = 'customfield[' . $custom_fld['fielddef_id'] . ']';
             $obj->fielddef_id = $custom_fld['fielddef_id'];
@@ -288,7 +289,7 @@ class generator_filters {
             /*if ( is_array($fieldvals[$custom_fld['fielddef_id']]) ) {
                 $value = (isset($fieldvals[$custom_fld['fielddef_id']]['value']) ? $fieldvals[$custom_fld['fielddef_id']]['value'] : '');
             } else {
-                $value = (isset($fieldvals[$custom_fld['fielddef_id']]) ? $fieldvals[$custom_fld['fielddef_id']] : '');   
+                $value = (isset($fieldvals[$custom_fld['fielddef_id']]) ? $fieldvals[$custom_fld['fielddef_id']] : '');
             }*/
             #$value = (isset($fieldvals[$custom_fld['fielddef_id']]['value']) ? $fieldvals[$custom_fld['fielddef_id']]['value'] : '');
             #$value = (isset($fieldvals[$custom_fld['fielddef_id']]) ? $fieldvals[$custom_fld['fielddef_id']] : '');
@@ -296,7 +297,7 @@ class generator_filters {
             $obj->value = $value;
             $obj->help = $custom_fld['help'];
             $obj->extra = $custom_fld['extra'];
-            $obj->filter = $id . 'filter_' . $custom_fld['fielddef_id'] . '_equal';            
+            $obj->filter = $id . 'filter_' . $custom_fld['fielddef_id'] . '_equal';
             switch ($custom_fld['type']) {
                 case 'textbox':
                     $size = !empty($custom_fld['size']) ? $custom_fld['size'] : 50;
@@ -323,21 +324,22 @@ class generator_filters {
                             unset($custom_fld['params']["module"]);
                             $custom_fld['params']["items"] = true;
                             $module->DoAction('default', $id, $custom_fld['params'], '');
-                            
+
                             $items = generator_tools::$items;
                             $obj_has_key = (!empty($custom_fld['module_view'])) ? $custom_fld['module_view'] : 'title';
                             $options = extended_tools_opts::object_to_hash($items, $obj_has_key, 'item_id');
-                            
+
                             generator_tools::$items = null;
                         }
                     }
 
-                    if (isset($custom_fld['multiple']) && is_int($custom_fld['multiple']) && !$frontend) {
+                    if (isset($custom_fld['multiple']) && (bool)$custom_fld['multiple'] && !$frontend) {
+                        $size = (!empty($custom_fld['size'])) ? (int)$custom_fld['size'] : 6;
                         if (isset($custom_fld['select_default'])) {
                             $options = array($custom_fld['select_default'] => '') + $options;
-                            $obj->field = $mod->CreateInputSelectList($id, $name . "[]", $options, (!empty($value) ? explode(',', $value) : array(0 => '')), $custom_fld['multiple']);
+                            $obj->field = $mod->CreateInputSelectList($id, $name . "[]", $options, (!empty($value) ? explode(',', $value) : array(0 => '')), $size);
                         } else {
-                            $obj->field = $mod->CreateInputHidden($id, $name . "[]", '') . $mod->CreateInputSelectList($id, $name . "[]", $options, (!empty($value) ? explode(',', $value) : array(0 => '')), $custom_fld['multiple']);
+                            $obj->field = $mod->CreateInputHidden($id, $name . "[]", '') . $mod->CreateInputSelectList($id, $name . "[]", $options, (!empty($value) ? explode(',', $value) : array(0 => '')), $size);
                         }
                     } else {
                         $options = array($this->_mod->Lang('select_default') => '') + $options;
@@ -360,7 +362,7 @@ class generator_filters {
                 case 'dropdown':
                     $isMultiple = (isset($custom_fld['multiple']) && is_int($custom_fld['multiple']) && !$frontend);
                     $size = (!empty($custom_fld['size'])) ? (int)$custom_fld['size'] : 6;
-                    
+
                     $options = array();
                     if (!$isMultiple) {
                         $options[$this->_mod->Lang('select_default')] = '';
@@ -384,7 +386,7 @@ class generator_filters {
                     } else {
                         $obj->field = $mod->CreateInputDropdown($id, $name, $options, -1, $value);
                     }
-                    
+
                     if ((bool)$custom_fld['allowAdd']) {
                         $button_tpl = '<button class="{{class}}" data-field="{{field}}" data-fieldName="{{fieldName}}">
                             <span class="ui-button-icon-primary ui-icon ui-icon-plus"></span>
@@ -409,7 +411,7 @@ class generator_filters {
                         //$script = '<script>new DropdownAdd({el: document.querySelector("#' . $selectorName . '")});</script>';
                         $obj->field = '<div>' . $obj->field . $button . '</div>';
                     }
-                    
+
                     break;
                 case 'dropdown_from_udt':
                     $options = array();
@@ -562,7 +564,7 @@ jQuery(document).ready(function($){
                         $module = cms_utils::get_module($custommoduleparams["module"]);
                         unset($custommoduleparams["module"]);
                     }
-                    //'dir' => generator_tools::filepicker_location($mod)                    
+                    //'dir' => generator_tools::filepicker_location($mod)
                     if ($module) {
                         if ($module->GetName() == 'GBFilePicker') {
                             $obj->field = $module->CreateFilePickerInput($mod, $id, $name, $value, $custommoduleparams
@@ -618,9 +620,9 @@ jQuery(document).ready(function($){
                     $kv_html .= $mod->CreateInputTextWithLabel($id, 'label'.$custom_fld['fielddef_id'], '', $size, $max_length, '', $keyName) . '<br>';
                     $kv_html .= $mod->CreateInputTextWithLabel($id, 'value'.$custom_fld['fielddef_id'], '', $size, $max_length, '', $valueName) . '<input type="checkbox" id="kv-title' . $custom_fld['fielddef_id'] .'" />' . $mod->Lang('keyValue_checkbox_name') . '<br>';
                     $kv_html .= '<button id="' . $id .'kv-save' . $custom_fld['fielddef_id'] .'" class="ui-button ui-state-default ui-corner-all ui-button-text-icon-primary"><span class="ui-button-icon-primary ui-icon ui-icon-disk"></span><span class="ui-button-text">' . $mod->Lang("keyValue_add") . '</span></button>';
-                    
+
                     $kv_saveOrder = '<button id="kv-saveOrder' . $custom_fld['fielddef_id'] . '" class="ui-button ui-state-default ui-corner-all ui-button-text-icon-primary"><span class="ui-button-icon-primary ui-icon ui-icon-disk"></span><span class="ui-button-text">' . $mod->Lang("save_order") . '</span></button>';
-                    
+
                     $kv_script = '<script>var a = new KeyValue({
                         table: document.getElementById("kv-table' . $custom_fld['fielddef_id'] . '"),
                         inputLabel: document.getElementById("' . $id .'label' . $custom_fld['fielddef_id'] .'"),
@@ -650,18 +652,18 @@ jQuery(document).ready(function($){
                 case 'lookup':
                     $lu_extra = '';
                     $lu_script = '';
-                    
+
                     $values = array_map('strrev', explode(',', strrev($value), 3));
 
                     $tmp = '<input type="text" id="%s" class="cms_textfield" name="%s" value="%s" size="50" maxlength="255" />';
                     $fieldName = $id . $name . '[]';
                     $lu_field = sprintf($tmp, 'lookup_input' . $custom_fld['fielddef_id'], $fieldName, (is_array($values) && isset($values[2])) ? $values[2] : $value);
-                    
+
                     if ( !generator_tools::can_geolocate() ) {
                         $obj->help = $mod->Lang('geolocate_module_required');
                     } else {
                         $tmp1 = '<label>%s</label>&nbsp;&nbsp;<input type="text" id="%s" class="cms_textfield" name="%s" value="%s" size="20" maxlength="50" readonly />&nbsp;&nbsp;&nbsp;';
-                        
+
                         $lu_extra .= '<button id="lookup_save' . $custom_fld['fielddef_id'] .'" class="ui-button ui-state-default ui-corner-all ui-button-text-icon-primary"><span class="ui-button-icon-primary ui-icon ui-icon-arrow-4"></span><span class="ui-button-text">' . $mod->Lang("lookup_calculate") . '</span></button><br />';
                         $lu_extra .= sprintf($tmp1, $mod->Lang("lookup_latitude"), 'lookup_lat' . $custom_fld['fielddef_id'],  $fieldName, (is_array($values) && isset($values[1])) ? $values[1] : '');
                         $lu_extra .= sprintf($tmp1, $mod->Lang("lookup_longitude"), 'lookup_lon' . $custom_fld['fielddef_id'],  $fieldName, (is_array($values) && isset($values[0])) ? $values[0] : '');
@@ -678,7 +680,7 @@ jQuery(document).ready(function($){
 
                     $obj->field = $lu_field . $lu_extra . $lu_script;
                     break;
-                    
+
                 case 'json':
                     if (empty($custom_fld['headers'])) {
                         $obj->field = $mod->Lang('json_empty_headers');
@@ -689,7 +691,7 @@ jQuery(document).ready(function($){
                     $themeImgPath = "themes/{$admintheme->themeName}/images/icons/";
 
                     $selector = 'js-jttable' . $custom_fld['fielddef_id'];
-                    
+
                     // Generate Header
                     $tableHeadContent = array();
                     foreach ($custom_fld['headers'] as $key => $value) {
@@ -704,7 +706,7 @@ jQuery(document).ready(function($){
                     );
 
                     // Generate body
-                    
+
                     $emptyRow = str_replace(
                         array('{{colspan}}', '{{text}}'),
                         array(count($tableHeadContent), $mod->Lang('json_empty_row')),
@@ -735,7 +737,7 @@ jQuery(document).ready(function($){
                     $orderBtn = '<button class="ui-button ui-state-default ui-corner-all ui-button-text-icon-primary jt-order"><span class="ui-button-icon-primary ui-icon ui-icon-disk"></span><span class="ui-button-text">' . $mod->Lang("save_order") . '</span></button>';
 
                     $hiddenTextarea = '<textarea name="' . $id . $name . '" class="jt-textarea hidden" style="display: none">' . $obj->value . '</textarea>';
-                    
+
                     /*$jsHeaders = array_map(function ($mItem) {
                         return "'" . $mItem . "'";
                     }, array_keys($custom_fld['headers']));*/
@@ -747,7 +749,7 @@ jQuery(document).ready(function($){
                         }
                         $jsHeaders .= "'" . $head . "'";
                     }
-                    
+
                     $js = str_replace(
                         array('{{selector}}', '{{iconEdit}}', '{{iconRemove}}', '{{iconCancel}}', '{{iconSave}}', '{{headers}}'),
                         array(
@@ -808,7 +810,7 @@ jQuery(document).ready(function($){
     }
 
     public function process(array &$countjoins, array &$joins, array &$where, array &$paramarray) {
-        
+
     }
 
 }
