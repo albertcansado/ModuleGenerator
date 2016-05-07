@@ -6,7 +6,7 @@ CMSMS Version > 1.11 not 2.x
 ## Dependencies
 * [ExtendedTools](https://github.com/albertcansado/ExtendedTools)
 * CGExtensions
-* CGSmartImage (Optional)
+* CGSmartImage (Optional but recomended)
 
 ## New Fielddefs
 * hr
