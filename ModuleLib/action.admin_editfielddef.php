@@ -63,18 +63,6 @@ if (isset($params['submit']) || isset($params['apply'])) {
         $errors[] = $this->Lang('fielddef_name_empty');
     }
 
-    if (isset($fielddef_id)) {
-        $query = 'SELECT fielddef_id FROM ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_fielddef WHERE name = ? AND fielddef_id != ?';
-        $exists = $db->GetOne($query, array($name, $fielddef_id));
-    } else {
-        $query = 'SELECT fielddef_id FROM ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_fielddef WHERE name = ?';
-        $exists = $db->GetOne($query, array($name));
-    }
-
-    if ($exists) {
-        $errors[] = $this->Lang('fielddef_name_exists');
-    }
-
     // generate alias if not supplied
     if ($alias == '') {
         $alias = generator_tools::generate_alias($name);
@@ -83,6 +71,18 @@ if (isset($params['submit']) || isset($params['apply'])) {
     // check alias
     if (!generator_tools::is_valid_alias($alias)) {
         $errors[] = $this->Lang('alias_invalid');
+    }
+
+    if (isset($fielddef_id)) {
+        $query = 'SELECT fielddef_id FROM ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_fielddef WHERE alias = ? AND fielddef_id != ?';
+        $exists = $db->GetOne($query, array($alias, $fielddef_id));
+    } else {
+        $query = 'SELECT fielddef_id FROM ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_fielddef WHERE alias = ?';
+        $exists = $db->GetOne($query, array($alias));
+    }
+
+    if ($exists) {
+        $errors[] = $this->Lang('fielddef_name_exists');
     }
 
     if (empty($errors)) {
