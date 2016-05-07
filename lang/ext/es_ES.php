@@ -224,6 +224,7 @@ $lang['setpublished'] = 'Marcar como activo';
 $lang['with_selected'] = 'Seleccionada';
 $lang['go'] = 'Ir';
 $lang['nothing_selectd'] = 'No hay nada seleccionado';
+$lang['setcategory'] = 'Cambiar Categoria';
 
 
 #options
@@ -322,6 +323,9 @@ $lang['deleted'] = 'La entrada se ha eliminado con éxito';
 $lang['add'] = 'Añadir';
 $lang['alias'] = 'Alias';
 $lang['alias_invalid'] = 'El alias es inválido. Debe ser un nombre de variable PHP válido';
+
+## BulkActions
+$lang['bulkcategory_title'] = 'Assignar una categoria distinta a los elementos seleccionados';
 
 
 $lang['changelog'] = '<ul>

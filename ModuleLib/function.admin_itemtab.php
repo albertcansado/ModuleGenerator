@@ -235,7 +235,7 @@ if (is_array($custom_fields) && count($custom_fields) && count($fields_viewable)
 }
 
 
-$joins[] = 'LEFT JOIN ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_categories B 
+$joins[] = 'LEFT JOIN ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_categories B
                   ON A.category_id = B.category_id';
 
 if (!empty($hierarchy)) {
@@ -357,7 +357,7 @@ while ($dbresult && $row = $dbresult->FetchRow()) {
 
     // featured
     if ($row['featured']) {
-        $onerow->featured = $this->CreateLink($id, 'admin_featureditem', $returnid, $admintheme->DisplayImage('icons/system/true.gif', $this->Lang('revert_featured'), '', '', 'systemicon'), array('approve' => 0, 'item_id' => $row['item_id']));   
+        $onerow->featured = $this->CreateLink($id, 'admin_featureditem', $returnid, $admintheme->DisplayImage('icons/system/true.gif', $this->Lang('revert_featured'), '', '', 'systemicon'), array('approve' => 0, 'item_id' => $row['item_id']));
     } else {
         $onerow->featured = $this->CreateLink($id, 'admin_featureditem', $returnid, $admintheme->DisplayImage('icons/system/false.gif', $this->Lang('approve_featured'), '', '', 'systemicon'), array('approve' => 1, 'item_id' => $row['item_id']));
     }
@@ -388,6 +388,15 @@ $bulkactions = array();
 $bulkactions['delete'] = $this->Lang('delete');
 $bulkactions['setinactive'] = $this->Lang('setdraft');
 $bulkactions['setactive'] = $this->Lang('setpublished');
+
+if ($this->GetPreference('copy_admin')) {
+    $bulkactions['duplicate'] = lang('copy');
+}
+
+if ($this->GetPreference('item_category_edit')) {
+    $bulkactions['category'] = $this->Lang('setcategory');
+}
+
 $smarty->assign('bulkactions', $bulkactions);
 
 // get the custom fields

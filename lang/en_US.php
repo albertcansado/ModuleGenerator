@@ -300,6 +300,7 @@ $lang['setpublished'] = 'Set As Active';
 $lang['with_selected'] = 'With Selected';
 $lang['go'] = 'Go';
 $lang['nothing_selectd'] = 'Nothing selected';
+$lang['setcategory'] = 'Set Category';
 
 
 #options
@@ -351,6 +352,7 @@ $lang['prompt_summary_sorting'] = 'Sorting';
 $lang['prompt_summary_pagelimit'] = 'Pagelimit';
 $lang['prompt_category_extra_label'] = 'Category extra label';
 $lang['prompt_item_title_edit'] = 'Edit title';
+
 #Featured
 $lang['prompt_item_featured_edit'] = 'Edit featured';
 $lang['viewable_fields'] = 'Viewable fields';
@@ -410,21 +412,24 @@ $lang['image_not_deleted'] = 'Image wasn\'t deleted.';
 $lang['image_not_found'] = 'Image was not find.';
 $lang['image_orig_size'] = 'Original image size';
 
+## BulkActions
+$lang['bulkcategory_title'] = 'Set Selected Items to a different Category';
+
 
 $lang['changelog'] = '<ul>
 <li>Version 2.2.3 september, 2012  - nothing change, but fix xml in repositary</li>
-<li>Version 2.2.2 august, 2012 
-<br />Moved and purification option tab. 
+<li>Version 2.2.2 august, 2012
+<br />Moved and purification option tab.
 <br />Removed default params for default and detail aciton. Use CGExtension plugin cge_module_hint (see help)</li>
-<li>Version 2.0 27. februar, 2012 
+<li>Version 2.0 27. februar, 2012
 <br />add gallery - mutliupload, sorting, resize
 </li>
-<li>Version 1.9 Januar, 2012 
+<li>Version 1.9 Januar, 2012
 <br />add category custom fields, moved to their own section.
 <br /> upgrade script compatible with 1.8.1 version
 <br /> fix some issues
 </li>
-<li>Version 1.8.1 Januar, 2012 
+<li>Version 1.8.1 Januar, 2012
 <br />add option for preview in admin
 <br />add preview icon in admin
 <br />add option for copy item

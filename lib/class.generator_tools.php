@@ -39,7 +39,7 @@ class generator_tools {
     public static $fields_blocklist = array('item_id', 'category_id', 'title', 'alias', 'url', 'position', 'active', 'item_date', 'create_date', 'modified_date', 'category_id', 'category_name', 'category_alias');
 
     public function __construct() {
-        
+
     }
 
     /**
@@ -113,7 +113,7 @@ class generator_tools {
     /**
      *
      * @param string $data
-     * @return timestamp 
+     * @return timestamp
      */
     public static function process_filter_date($date) {
         $date_from = '';
@@ -137,7 +137,7 @@ class generator_tools {
     /**
      *
      * @param string $data
-     * @return timestamp 
+     * @return timestamp
      */
     public static function process_filter_date_recursive($date) {
         $date_from = '';
@@ -174,7 +174,7 @@ class generator_tools {
     /**
      * get category list
      * @param object $mod
-     * @return array 
+     * @return array
      */
     public static function get_category_list($mod, $where = array(), $paramarray = array(), $field = 'long_name') {
         $db = cmsms()->GetDb();
@@ -229,8 +229,8 @@ class generator_tools {
 
         $query = '
 		SELECT category_id, category_name, category_alias, parent_id, hierarchy, hierarchy_position, long_name
-		FROM ' . cms_db_prefix() . 'module_' . $mod->_GetModuleAlias() . '_categories 
-		WHERE 1 
+		FROM ' . cms_db_prefix() . 'module_' . $mod->_GetModuleAlias() . '_categories
+		WHERE 1
 	';
         if (isset($params['category']) && $params['category'] != '') {
             $categories = explode(',', $params['category']);
@@ -257,7 +257,7 @@ class generator_tools {
             $toDepth = $params['depth'] - 1;
             $query .= " AND hierarchy REGEXP '^([0-9]{5})([\.][0-9]{5}){" . $toDepth . "}$' ";
         }
-        
+
         $query .= ' ORDER by hierarchy_position ' . $sortorder;
         $dbresult = $db->Execute($query);
         $rowcounter = 0;
@@ -329,7 +329,7 @@ class generator_tools {
      * get item
      * @param object $mod
      * @param int $item_id
-     * @return array 
+     * @return array
      */
     public static function get_items($mod) {
         $db = cmsms()->GetDb();
@@ -339,11 +339,26 @@ class generator_tools {
         return $items;
     }
 
+    public static function get_itemsById($mod, $ids = null) {
+        $db = cmsms()->GetDb();
+        $query = 'SELECT * FROM ' . cms_db_prefix() . 'module_' . $mod->_GetModuleAlias() . '_item WHERE item_id ';
+
+        if (is_array($ids)) {
+            $query .= 'IN (' . implode(',', $ids) . ')';
+        } elseif (is_string($ids)) {
+            $query .= '= ?';
+        } else {
+            $query .= '1=1';
+        }
+
+        return $db->GetAll($query, is_string($ids) ? array($ids) : null);
+    }
+
     /**
      * get item
      * @param object $mod
      * @param int $item_id
-     * @return array 
+     * @return array
      */
     public static function get_item($mod, $item_id) {
         $data = cms_utils::get_app_data($mod->GetName() . __FUNCTION__ . $item_id);
@@ -361,7 +376,7 @@ class generator_tools {
      * get item
      * @param object $mod
      * @param int $image_id
-     * @return array 
+     * @return array
      */
     public static function get_image($mod, $image_id) {
         $data = cms_utils::get_app_data($mod->GetName() . __FUNCTION__ . $image_id);
@@ -513,8 +528,8 @@ class generator_tools {
     }
 
     /**
-     *  
-     * @param object $mod 
+     *
+     * @param object $mod
      */
     public static function update_hierarchy_positions($mod) {
         $db = cmsms()->GetDb();
@@ -638,7 +653,7 @@ class generator_tools {
      *
      * @param object $module
      * @param boolean $frontend
-     * @return type 
+     * @return type
      */
     public static function get_fields($module, $frontend = true, $section = 'items') {
 
@@ -1358,7 +1373,7 @@ class generator_tools {
     /**
      * Delete item
      * @param object $mod
-     * @param int $item_id 
+     * @param int $item_id
      */
     public static function delete_item($mod, $item_id) {
 
@@ -1398,10 +1413,10 @@ class generator_tools {
     /**
      * Delete image
      * @param object $mod
-     * @param int $image_id 
+     * @param int $image_id
      */
     public static function delete_image($mod, $image_id) {
-        
+
         $db = cmsms()->GetDb();
 
         $query = 'DELETE FROM ' . cms_db_prefix() . 'module_' . $mod->_GetModuleAlias() . '_images WHERE image_id = ?';
@@ -1454,9 +1469,9 @@ class generator_tools {
 //
     private static function get_geolocator() {
         if( self::$_geolocator != null ) return self::$_geolocator;
-        
+
         $module_list = ModuleOperations::get_modules_with_capability('geolocate');
-        
+
         if( is_array($module_list) && count($module_list) ) {
             foreach( $module_list as $mname ) {
                 $res = cms_utils::get_module($mname);
@@ -1475,10 +1490,10 @@ class generator_tools {
 
     public static function geolocate($address) {
         if( !$address ) return;
-        
+
         $obj = self::get_geolocator();
         if( !is_object($obj) ) return;
-        
+
         return $obj->GetCoordsFromAddress($address);
     }
 
