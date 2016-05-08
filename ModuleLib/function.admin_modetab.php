@@ -16,9 +16,12 @@ $fields_for_filter = generator_tools::get_field_defs($this, null, null, null);
 $custom_flds = array();
 $custom_fields_values = array();
 $fielddefs = array();
-if (empty($fields_for_filter) == false) {
+if (!empty($fields_for_filter)) {
+	$notForSorting = ['hr', 'tab', 'keyValue', 'upload_file', 'module', 'lookup', 'dropdown', 'json', 'video', 'dropdown_from_udt', 'dropdownfrommodule', 'module_link', 'static', 'file_picker', 'select_file'];
     foreach ($fields_for_filter as $row) {
-        $sortitems[$row['name']] = 'f:' . $row['alias'];
+    	if (!in_array($row['type'], $notForSorting)) {
+        	$sortitems[$row['name']] = 'f:' . $row['alias'];
+        }
     }
 }
 

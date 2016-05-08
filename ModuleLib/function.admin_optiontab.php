@@ -54,22 +54,13 @@ $smarty->assign('input_filter_date', $this->CreateInputCheckbox($id, 'filter_dat
 
 $fields = generator_fields::get_field_defs($this);
 $filter_custom_fields = array();
-if (empty($fields) == false) {
+if (!empty($fields)) {
+    $notForSorting = ['hr', 'tab', 'keyValue', 'upload_file', 'module', 'lookup', 'dropdown', 'json', 'video', 'dropdown_from_udt', 'dropdownfrommodule', 'module_link', 'static', 'file_picker', 'select_file'];
     foreach ($fields as $field) {
-        switch ($field['type']) {
-            case 'textarea':
-            case 'static':
-            case 'tab':
-            case 'key_value':
-            case 'hr':
-            case 'upload_file':
-            case 'json':
-            break;
-            default:
+        if (!in_array($field['type'], $notForSorting)) {
                 $filter_custom_fields[$field['name']] =
                 $this->CreateInputHidden($id, 'filter_custom_fields[' . $field['fielddef_id'] . ']', 0)
                 . $this->CreateInputCheckbox($id, 'filter_custom_fields[' . $field['fielddef_id'] . ']', 1, $field['filter_admin']);
-                break;
         }
     }
 }
@@ -86,6 +77,7 @@ if (is_array($all_fields)) {
             case 'key_value':
             case 'hr':
             case 'json':
+            case 'video':
                 break;
             case 'upload_file':
                 //print_r($all_fields[$i]['extra']);

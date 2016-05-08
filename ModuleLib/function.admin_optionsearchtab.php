@@ -18,11 +18,14 @@ $smarty->assign('input_search_date_end', $this->CreateInputCheckbox($id, 'search
 
 $fields = generator_fields::get_field_defs($this);
 $search_custom_fields = array();
-if (empty($fields) == false) {
+if (!empty($fields)) {
+	$notForSorting = ['hr', 'tab', 'keyValue', 'upload_file', 'module', 'lookup', 'dropdown', 'json', 'video', 'dropdown_from_udt', 'dropdownfrommodule', 'module_link', 'static', 'file_picker', 'select_file'];
     foreach ($fields as $field) {
-        $search_custom_fields[$field['name']] =
-                $this->CreateInputHidden($id, 'search_custom_fields[' . $field['fielddef_id'] . ']', 0)
-                . $this->CreateInputCheckbox($id, 'search_custom_fields[' . $field['fielddef_id'] . ']', 1, $field['searchable']);
+    	if (!in_array($field['type'], $notForSorting)) {
+	        $search_custom_fields[$field['name']] =
+	                $this->CreateInputHidden($id, 'search_custom_fields[' . $field['fielddef_id'] . ']', 0)
+	                . $this->CreateInputCheckbox($id, 'search_custom_fields[' . $field['fielddef_id'] . ']', 1, $field['searchable']);
+	    }
     }
 }
 $smarty->assign('search_custom_fields', $search_custom_fields);
