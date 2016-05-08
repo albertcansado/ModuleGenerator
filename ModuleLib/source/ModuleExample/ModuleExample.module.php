@@ -134,36 +134,13 @@ class ModuleExample extends ModuleGenerator {
         $smarty = cmsms()->GetSmarty();
         $db = cmsms()->GetDb();
         
-        #parent::DoAction($name, $id, $params, $returnid);
-
-        if( $returnid == '' ) {
-            // admin action
-            if( isset($params['cg_activetab']) ) {
-                $this->_current_tab = trim($params['cg_activetab']);
-                unset($params['cg_activetab']);
-            }
-            if( isset($params['cg_error']) ) {
-                $this->_errormsg = explode(':err:',$params['cg_error']);
-                unset($params['cg_error']);
-            }
-            if( isset($params['cg_message']) ) {
-                $this->_messages = explode(':msg:',$params['cg_message']);
-                unset($params['cg_message']);
-            }
-
-            $this->DisplayErrors();
-            $this->DisplayMessages();
-        }
+        parent::DoAction('', $id, $params, $returnid);
 
         switch ($name) {
             default:
                 // fix 4 smarty security width templates folder
                 if (isset($CMS_ADMIN_PAGE) && $CMS_ADMIN_PAGE == 1) {
-                    $config = cmsms()->GetConfig();
-                    #$templatedir = GENERATOR_MODLIB_PATH;
                     $templatedir = GENERATOR_MODLIB_PATH . '/templates'; // CMSMS 1.12
-
-                    $smarty = cmsms()->GetSmarty();
                     $smarty->setTemplateDir($templatedir);
                 }
 
