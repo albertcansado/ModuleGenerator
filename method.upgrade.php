@@ -342,6 +342,27 @@ switch ($oldversion) {
                 $mobject->CreateEvent('DropdownOptionAdded');
             }
         }
-        $current_version = "3.0.1";
+    case '3.0.2':
+        $modules = generator_opts::get_modules();
+        $newContentFunction = "\t\treturn parent::_ModuleGetHeaderHtml();";
+        
+        foreach ($modules as $module) {
+            $mobject = cms_utils::get_module($module["module_name"]);
+            if (!$mobject) {
+                continue;
+            }
+            $moduleFile = cms_join_path($config['root_path'], 'modules', $mobject->GetName(), $mobject->GetName() . '.module.php');
+
+            if ($moduleFile) {
+                $source = @file_get_contents($moduleFile);
+                if (strpos($source, $newContentFunction) === false) {
+                    $code = strstr($source, 'GetHeaderHtml() {', true);
+                    $code .= "GetHeaderHtml() {\n";
+                    $code .= str_replace('return $output;', $newContentFunction, strstr($source, 'return $output;', false));
+                    @file_put_contents($moduleFile, $code);
+                }
+            }
+        }
+        $current_version = "3.0.3";
 }
 ?>
