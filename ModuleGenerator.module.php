@@ -80,7 +80,7 @@ class ModuleGenerator extends CGExtensions {
     }
 
     public function GetVersion() {
-        return '3.0.2';
+        return '3.0.3';
     }
 
     public function AllowAutoUpgrade() {
