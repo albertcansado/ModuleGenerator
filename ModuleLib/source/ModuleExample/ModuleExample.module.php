@@ -34,7 +34,7 @@ class ModuleExample extends ModuleGenerator {
 
     #---------------------
     # Internal autoloader
-    #---------------------	
+    #---------------------
 
     private final function _autoloader($classname) {
         $config = cmsms()->GetConfig();
@@ -126,14 +126,14 @@ class ModuleExample extends ModuleGenerator {
      * @param type $name
      * @param type $id
      * @param type $params
-     * @param type $returnid 
+     * @param type $returnid
      */
     public function DoAction($name, $id, $params, $returnid = '') {
         global $CMS_ADMIN_PAGE;
         $config = cmsms()->GetConfig();
         $smarty = cmsms()->GetSmarty();
         $db = cmsms()->GetDb();
-        
+
         parent::DoAction('', $id, $params, $returnid);
 
         switch ($name) {
@@ -192,7 +192,7 @@ class ModuleExample extends ModuleGenerator {
 
     /**
      *  get module alias
-     * @return type 
+     * @return type
      */
     public function _GetModuleAlias() {
         $value = cms_utils::get_app_data(get_class() . __FUNCTION__);
