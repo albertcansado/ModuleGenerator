@@ -85,19 +85,19 @@ class generator_tools {
         $query .= " WHERE section = ? ";
         $parms[] = $section;
 
-        if ($type) {
-            $query .= " AND type  = ?  ";
+        if (!is_null($type)) {
+            $query .= " AND type = ? ";
             $parms[] = $type;
         }
-        if ($filter_frontend) {
-            $query .= " AND filter_frontend  = ?  ";
+        if (!is_null($filter_frontend)) {
+            $query .= " AND filter_frontend = ? ";
             $parms[] = $filter_frontend;
         }
-        if ($filter_admin) {
-            $query .= " AND filter_admin  = ?  ";
+        if (!is_null($filter_admin)) {
+            $query .= " AND filter_admin = ? ";
             $parms[] = $filter_admin;
         }
-        $query .= "  ORDER BY position";
+        $query .= "ORDER BY position";
         $dbresult = $db->GetAll($query, $parms);
         return $dbresult;
     }
