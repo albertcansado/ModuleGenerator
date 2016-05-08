@@ -228,31 +228,7 @@ class ModuleExample extends ModuleGenerator {
     }
 
     public function GetHeaderHtml() {
-        $module = cms_utils::get_module('ModuleGenerator');
-        $output = '<script language="javascript" type="text/javascript" src="' . $module->GetModuleURLPath() . '/js/mColorPicker.min.js"></script>';
-        #JS for KeyValue
-        $output .= '<script language="javascript" type="text/javascript" src="' . $module->GetModuleURLPath() . '/js/keyValue.min.js"></script>';
-        #JS for lookup
-        $output .= '<script language="javascript" type="text/javascript" src="' . $module->GetModuleURLPath() . '/js/lookup.min.js"></script>';
-        #JS for jtTable
-        $output .= '<script language="javascript" type="text/javascript" src="' . $module->GetModuleURLPath() . '/js/jtTable.min.js"></script>';
-        #JS for dropdownAdd
-        $output .= '<script language="javascript" type="text/javascript" src="' . $module->GetModuleURLPath() . '/js/dropdownAdd.min.js"></script>';
-
-        if ($this->GetPreference('has_gallery')) {
-            $output .= '<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>';
-            $plupload_libs = array('plupload.js', 'plupload.gears.js', 'plupload.silverlight.js', 'plupload.flash.js', 'plupload.browserplus.js', 'plupload.html4.js', 'plupload.html5.js');
-            foreach ($plupload_libs as $plupload_lib) {
-                $fn = $module->GetModuleURLPath() . '/js/plupload/' . $plupload_lib;
-                $output .= '<script type="text/javascript" src="' . $fn . '"></script>' . "\n";
-            }
-            $output .= '<!-- <script type="text/javascript"  src="http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js"></script> -->';
-        }
-
-        $fn = $module->GetModuleURLPath() . '/js/jquery.tablednd_0_5.js';
-        $output .= '<script type="text/javascript" src="' . $fn . '"></script>' . "\n";
-
-        return $output;
+        return parent::_ModuleGetHeaderHtml();
     }
 
     public function SearchResultWithParams($returnid, $item_id, $attr = '', $params = '') {

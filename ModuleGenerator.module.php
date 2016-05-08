@@ -147,6 +147,42 @@ class ModuleGenerator extends CGExtensions {
         return $this->CheckPermission($perm);
     }
 
+    public function _ModuleGetHeaderHtml() {
+        $module = cms_utils::get_module('ModuleGenerator');
+        $output = [];
+
+        // Attach JS libraries
+        $scripts = [
+            'spectrum.min',
+            'keyValue.min',
+            'lookup.min',
+            'jtTable.min',
+            'dropdownAdd.min',
+            'jquery.tablednd.min'
+        ];
+
+        $scriptTag = '<script type="text/javascript" src="' . $module->GetModuleURLPath() . '/js/%s.js"></script>';
+        foreach ($scripts as $script) {
+            $output[] = sprintf($scriptTag, $script);
+        }
+
+        // Attach CSS libraries
+        $output[] = '<link rel="stylesheet" href="' . $module->GetModuleURLPath() . '/js/spectrum.css" />';
+
+        // Gallery Scripts
+        if ($this->GetPreference('has_gallery')) {
+            $output[] = '<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>';
+            $plupload_libs = array('plupload.js', 'plupload.gears.js', 'plupload.silverlight.js', 'plupload.flash.js', 'plupload.browserplus.js', 'plupload.html4.js', 'plupload.html5.js');
+            foreach ($plupload_libs as $plupload_lib) {
+                $fn = $module->GetModuleURLPath() . '/js/plupload/' . $plupload_lib;
+                $output[] = '<script type="text/javascript" src="' . $fn . '"></script>' . "\n";
+            }
+            $output[] = '<!-- <script type="text/javascript"  src="http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js"></script> -->';
+        }
+
+        return implode("", $output);
+    }
+
     public function ModProcessTemplate($tpl_name) {
         $ok = (strpos($tpl_name, '..') === false);
         if (!$ok)
