@@ -408,7 +408,7 @@ class generator_tools {
         $results[] = $item['title'];
         $results[] = $item['alias'];
 
-// date end for search results
+        // date end for search results
         self::$search_date_end = null;
         if ($mod->GetPreference('search_date_end')) {
             $item = self::get_item($mod, $item_id);
@@ -419,11 +419,11 @@ class generator_tools {
 
         foreach ($defs as $onedef) {
 
-// skip
+            // skip
             if (!$onedef["searchable"])
                 continue;
 
-//serachable - textbox, textarea, dropdown
+            //serachable - textbox, textarea, dropdown
             switch ($onedef["type"]) {
                 case 'textbox':
                 case 'textarea':
@@ -473,13 +473,13 @@ class generator_tools {
         $row = self::get_item($mod, $item_id);
         if ($row) {
 
-//0 position is the prefix displayed in the list results.
+            //0 position is the prefix displayed in the list results.
             $result[0] = $mod->GetFriendlyName();
 
-//1 position is the title
+            //1 position is the title
             $result[1] = $row['title'];
 
-//2 position is the URL to the title.
+            //2 position is the URL to the title.
 
             if (empty($row["url"]) == false) {
                 $prettyurl = $row["url"];
@@ -677,7 +677,7 @@ class generator_tools {
             $queryarray[] = ' frontend = ?';
             $parmsarray[] = 1;
         }
-// WHERE
+        // WHERE
         $query .= ( empty($queryarray) == false ? ' WHERE ' . implode(' AND ', $queryarray) : '' );
 
         $value = $db->GetArray($query, $parmsarray);
@@ -781,179 +781,130 @@ class generator_tools {
     }
 
     /**
-     * Get Extra: Exclude Prefix
-     * @param array $instructions Instructions
-     * @return array Returns array of prefixes to exclude if specified
+     * Get Extra
+     * @param string $extra
+     * @return array Returns an array of instructions if specified
      */
-    public static function get_extra_exclude_prefix($instructions) {
+    public static function get_extra($extra, $mod = null) {
+        if (!is_string($extra))
+            return;
+
+        $extra = trim($extra);
+
+        if ($mod != null && is_object($mod))
+            $extra = $mod->ProcessTemplateFromData($extra);
+
+
+        //$smarty = cmsms()->GetSmarty(); ??
+        $instructions = explode(';', trim($extra, ';'));
+        if (!empty($instructions))
+            return $instructions;
+    }
+    
+    /**
+     * 
+     * Examples:
+     *  - Single value:
+     *      In: optionName[foo]
+     *      Out: foo
+     *  - Multiple Valus:
+     *      In: optionsName[foo,bar]
+     *      Out: ['foo', 'bar']
+     *  - With Allowed option:
+     *      In: optionsName[foo,bar]
+     *      Allowed: ['foo']
+     *      Out: ['foo']
+     *      
+     *      // isSingle: true
+     *      In: optionsName[foo]
+     *      Allowed: ['bar']
+     *      Out: null
+     * @param array $instructions Instructions
+     * @param string $optionName Option name to check
+     * @param bool $isSimple true if option only expect one value, false otherwise
+     * @param array $allowed Array of valid values option could have
+     * @return mixed Returns array with values or only single value if $isSimple is true
+     */
+    public static function get_extra_parseOptions($instructions = array(), $optionName = '', $isSimple = true, $allowed = array())
+    {
+        $results = ($isSimple) ? null : array();
+        if (!is_array($instructions) || empty($optionName))
+            return $results;
+
+        $found = false;        
+        $regex = ((bool)$isSimple) ? '/^' . $optionName . '\[(.+)\]$/i' : '/^' . $optionName . '\[([^,]+(,[^,]+)*)\]$/i';
+        while ((($instruction = array_pop($instructions)) !== null) && !$found)  {
+            if (preg_match($regex, $instruction, $matches)) {
+                $found = true;
+                $result = explode(',', $matches[1]);
+                if (!empty($allowed)) {
+                    $result = array_intersect($allowed, $result);
+                }
+
+                if (!empty($result)) {
+                    $results = $result;
+                }
+            }
+        }
+
+        return ($isSimple && !empty($results)) ? array_pop($results) : $results;
+    }
+
+    /**
+     *
+     * Examples:
+     *      - Number
+     *          In: optionName[10]
+     *          Out: 10
+     *      - String
+     *          In: optionName[hola]
+     *          Out: null
+     * @param array $instructions Instructions
+     * @param string $optionName Option name to check
+     * @return int Returns value if is int
+     */
+    public static function get_extra_parseIntOptions($instructions = array(), $optionName = '')
+    {
+        $results = null;
+        if (!is_array($instructions) || empty($optionName))
+            return $results;
+
+        $found = false;
+        $regex = '/^' . $optionName . '\[([0-9]+)\]$/i';
+        while ((($instruction = array_pop($instructions)) !== null) && !$found)  {
+            if (preg_match($regex, $instruction, $matches)) {
+                $results = (int)$matches[1];
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * Valid values are:
+     *  - varname[0|false] // false
+     *  - varname[1|true] // true
+     *
+     * @param array $instructions Instructions
+     * @param string $varname Option name to check
+     * @return bool Returns true if varname option is set to true or false otherwise
+     */
+    public static function get_extra_customBool($instructions, $varname = '')
+    {
         if (!is_array($instructions))
             return;
 
         foreach ($instructions as $instruction) {
-// dir[thumb_]
-// dir[thumb_,notme]
-            if (preg_match('/^exclude_prefix\[([^,]+(,[^,]+)*)\]$/i', $instruction, $matches)) {
-                return explode(',', $matches[1]);
-            }
-        }
-    }
-
-    /**
-     * Get Extra: Directory
-     * @param array $instructions Instructions
-     * @return string Returns the directory if specified
-     */
-    public static function get_extra_dir($instructions) {
-        if (!is_array($instructions))
-            return;
-
-        foreach ($instructions as $instruction) {
-// dir[path/to/dir]
-            if (preg_match('/^dir\[(.+)\]$/i', $instruction, $matches)) {
-                return $matches[1];
-            }
-        }
-    }
-
-    /**
-     * Get Extra: Allowed File Extensions
-     * @param array $instructions Instructions
-     * @return array Returns allowed file extensions if specified
-     */
-    public static function get_extra_allow($instructions) {
-        if (!is_array($instructions))
-            return array();
-
-        foreach ($instructions as $instruction) {
-// allow[pdf,gif,png,jpeg,jpg]
-            if (preg_match('/^allow\[(.+)\]$/i', $instruction, $matches)) {
-                return explode(',', $matches[1]);
+            if (preg_match('/^' . $varname . '\[(.+)\]$/i', $instruction, $matches)) {
+                if ($matches[1] == 'true' || $matches[1] == '1') {
+                    return true;
+                }
             }
         }
 
-        return array();
+        return false;
     }
 
-    /**
-     * Get Extra: Date Format
-     * @param array $instructions Instructions
-     * @return string Returns date format to be used with the jquery
-     * datepicker if specified
-     */
-    public static function get_extra_date_format($instructions) {
-        if (!is_array($instructions))
-            return;
-
-        foreach ($instructions as $instruction) {
-// dateformat[dd/mm/yy]
-            if (preg_match('/^dateformat\[(.+)\]$/i', $instruction, $matches)) {
-                return $matches[1];
-            }
-        }
-    }
-
-    /**
-     * Get Extra: Row
-     * @param array $instructions Instructions
-     * @return int Returns maximum length if specified
-     */
-    public static function get_extra_rows($instructions) {
-        if (!is_array($instructions))
-            return;
-
-
-        foreach ($instructions as $instruction) {
-// max_length[20]
-            if (preg_match('/^rows\[([0-9]+)\]$/i', $instruction, $matches)) {
-                return (int) $matches[1];
-            }
-        }
-    }
-
-    /**
-     * Get Extra: Row
-     * @param array $instructions Instructions
-     * @return int Returns maximum length if specified
-     */
-    public static function get_extra_cols($instructions) {
-        if (!is_array($instructions))
-            return;
-
-        foreach ($instructions as $instruction) {
-// max_length[20]
-            if (preg_match('/^cols\[([0-9]+)\]$/i', $instruction, $matches)) {
-                return (int) $matches[1];
-            }
-        }
-    }
-
-    /**
-     * Get Extra: Max Length
-     * @param array $instructions Instructions
-     * @return int Returns maximum length if specified
-     */
-    public static function get_extra_max_length($instructions) {
-        if (!is_array($instructions))
-            return;
-
-        foreach ($instructions as $instruction) {
-// max_length[20]
-            if (preg_match('/^max_length\[([0-9]+)\]$/i', $instruction, $matches)) {
-                return (int) $matches[1];
-            }
-        }
-    }
-
-    /**
-     * Get Extra: Size
-     * @param array $instructions Instructions
-     * @return int Returns size if specified
-     */
-    public static function get_extra_size($instructions) {
-        if (!is_array($instructions))
-            return;
-
-        foreach ($instructions as $instruction) {
-// size[20]
-            if (preg_match('/^size\[([0-9]+)\]$/i', $instruction, $matches)) {
-                return (int) $matches[1];
-            }
-        }
-    }
-
-    /**
-     * Get Extra: Multiple
-     * @param array $instructions Instructions
-     * @return int Returns size if specified
-     */
-    public static function get_extra_multiple($instructions) {
-        if (!is_array($instructions))
-            return;
-
-        foreach ($instructions as $instruction) {
-// size[20]
-            if (preg_match('/^multiple\[([0-9]+)\]$/i', $instruction, $matches)) {
-                return (int) $matches[1];
-            }
-        }
-    }
-
-    /**
-     * Get Extra: Select default
-     * @param array $instructions Instructions
-     * @return int Returns size if specified
-     */
-    public static function get_extra_selectdefault($instructions) {
-        if (!is_array($instructions))
-            return;
-
-        foreach ($instructions as $instruction) {
-// size[20]
-            if (preg_match('/^select_default\[(.+)\]$/i', $instruction, $matches)) {
-                return $matches[1];
-            }
-        }
-    }
 
     /**
      * Get Extra: Module params
@@ -967,8 +918,8 @@ class generator_tools {
         $params = array();
 
         foreach ($instructions as $instruction) {
-// options[apple=Apple]
-// options[apple=Apple,banana=Banana]
+            // options[apple=Apple]
+            // options[apple=Apple,banana=Banana]
             if (preg_match('/^(.+)\[([^,]+=[^,]+(,[^,]+=[^,]+)*)\]$/i', $instruction, $matches)) {
 
                 $params["module"] = $matches[1];
@@ -985,6 +936,10 @@ class generator_tools {
     }
 
 
+    /**
+     *
+     *
+     */
     public static function get_extra_module_view($instructions) {
         if (!is_array($instructions)) {
             return;
@@ -1008,21 +963,6 @@ class generator_tools {
         return $params;
     }
 
-    /**
-     * Get Extra: UDT
-     * @param array $instructions Instructions
-     * @return array Returns an array of options if specified
-     */
-    public static function get_extra_moduleudt($instructions) {
-        if (!is_array($instructions))
-            return;
-
-        foreach ($instructions as $instruction) {
-            if (preg_match('/^udt\[(.+)\]$/i', $instruction, $matches)) {
-                return $matches[1];
-            }
-        }
-    }
 
     /**
      * Get Extra: Module Options
@@ -1035,7 +975,7 @@ class generator_tools {
 
         $options = array();
         foreach ($instructions as $instruction) {
-// {cms_module}
+            // {cms_module}
             $modulecontent = $instruction;
             foreach (explode(',', $modulecontent) as $pair) {
                 if (!$pair)
@@ -1117,8 +1057,8 @@ class generator_tools {
         $options = array();
 
         foreach ($instructions as $instruction) {
-// options[apple=Apple]
-// options[apple=Apple,banana=Banana]
+            // options[apple=Apple]
+            // options[apple=Apple,banana=Banana]
             if (preg_match('/^options\[([^,]+=[^,]+(,[^,]+=[^,]+)*)\]$/i', $instruction, $matches)) {
                 foreach (explode(',', $matches[1]) as $pair) {
                     $key_val = explode('=', $pair);
@@ -1131,40 +1071,8 @@ class generator_tools {
             return $options;
     }
 
-    /**
-    * Get Extra: Key Name
-    * @param array $instructions Instructions
-    * @return string Returns key's name if specified
-    */
-    public static function get_extra_keyName($instructions) {
-        if (!is_array($instructions))
-            return;
-// key=labelName
-        foreach ($instructions as $instruction) {
-            if (preg_match('/^key\=(.+)$/i', $instruction, $matches)) {
-                return $matches[1];
-            }
-        }
-    }
-
-    /**
-    * Get Extra: Value Name
-    * @param array $instructions Instructions
-    * @return string Returns value's name if specified
-    */
-    public static function get_extra_valueName($instructions) {
-        if (!is_array($instructions))
-            return;
-// value=valueName
-        foreach ($instructions as $instruction) {
-            if (preg_match('/^value\=(.+)$/i', $instruction, $matches)) {
-                return $matches[1];
-            }
-        }
-    }
-
 // Functions for Table - JSON
-//
+
     /**
     * Get Extra: Headers
     * @param array $instructions Instructions
@@ -1177,8 +1085,8 @@ class generator_tools {
         $options = array();
 
         foreach ($instructions as $instruction) {
-// headers[apple=Apple]
-// headers[apple=Apple,banana=Banana]
+            // headers[apple=Apple]
+            // headers[apple=Apple,banana=Banana]
             if (preg_match('/^headers\[([^,]+(,?[^,]+)*)*\]$/i', $instruction, $matches)) {
                 foreach (explode(',', $matches[1]) as $pair) {
                     $aux = explode('=', $pair);
@@ -1194,50 +1102,8 @@ class generator_tools {
             return $options;
     }
 
-    /**
-     * Get Extra
-     * @param string $extra
-     * @return array Returns an array of instructions if specified
-     */
-    public static function get_extra($extra, $mod = null) {
-        if (!is_string($extra))
-            return;
 
-        $extra = trim($extra);
-
-        if ($mod != null && is_object($mod))
-            $extra = $mod->ProcessTemplateFromData($extra);
-
-
-        $smarty = cmsms()->GetSmarty();
-        $instructions = explode(';', trim($extra, ';'));
-        if (!empty($instructions))
-            return $instructions;
-    }
-
-    /**
-     * Valid values are:
-     *  - varname[0|false] // false
-     *  - varname[1|true] // true
-     *
-     * @param array $instructions Instructions
-     * @param string $varname Option name to check
-     * @return bool Returns true if varname option is set to true or false otherwise
-     */
-    public static function get_extra_customBool($instructions, $varname = '') {
-        if (!is_array($instructions))
-            return;
-
-        foreach ($instructions as $instruction) {
-            if (preg_match('/^' . $varname . '\[(.+)\]$/i', $instruction, $matches)) {
-                if ($matches[1] == 'true' || $matches[1] == '1') {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
+// Other methods
 
     /**
      * Is valid alias

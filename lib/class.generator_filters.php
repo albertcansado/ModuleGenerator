@@ -65,19 +65,19 @@ class generator_filters {
 
                 switch ($setting['type']) {
                     case 'textbox':
-                        $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_size($instructions);
-                        $custom_flds[$custom_fld]['max_length'] = generator_tools::get_extra_max_length($instructions);
+                        $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_parseIntOptions($instructions, 'size');
+                        $custom_flds[$custom_fld]['max_length'] = generator_tools::get_extra_parseIntOptions($instructions, 'max_length');
                         break;
 
                     case 'dropdown':
                         $custom_flds[$custom_fld]['options'] = generator_tools::get_extra_options($instructions);
                         $custom_flds[$custom_fld]['allowAdd'] = generator_tools::get_extra_customBool($instructions, 'allowAdd');
                         $custom_flds[$custom_fld]['multiple'] = generator_tools::get_extra_customBool($instructions, 'multiple');
-                        $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_size($instructions);
+                        $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_parseIntOptions($instructions, 'size');
                         break;
 
                     case 'dropdown_from_udt':
-                        $custom_flds[$custom_fld]['udt'] = generator_tools::get_extra_moduleudt($instructions);
+                        $custom_flds[$custom_fld]['udt'] = generator_tools::get_extra_parseOptions($instructions, 'udt', true);
                         break;
 
                     case 'dropdownfrommodule':
@@ -85,11 +85,11 @@ class generator_filters {
                         break;
 
                     case 'module':
-                        $custom_flds[$custom_fld]['select_default'] = generator_tools::get_extra_selectdefault($instructions);
+                        $custom_flds[$custom_fld]['select_default'] = generator_tools::get_extra_parseOptions($instructions, 'select_default', true);
                         $custom_flds[$custom_fld]['multiple'] = generator_tools::get_extra_customBool($instructions, 'multiple');
                         $custom_flds[$custom_fld]['params'] = generator_tools::get_extra_moduleparams($instructions);
                         $custom_flds[$custom_fld]['module_view'] = generator_tools::get_extra_module_view($instructions);
-                        $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_size($instructions);
+                        $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_parseIntOptions($instructions, 'size');
                         break;
 
                     case 'module_link':
@@ -116,20 +116,20 @@ class generator_filters {
                         break;
 
                     case 'textarea':
-                        $custom_flds[$custom_fld]['cols'] = generator_tools::get_extra_cols($instructions);
-                        $custom_flds[$custom_fld]['rows'] = generator_tools::get_extra_rows($instructions);
-                        $custom_flds[$custom_fld]['max_length'] = generator_tools::get_extra_max_length($instructions);
+                        $custom_flds[$custom_fld]['cols'] = generator_tools::get_extra_parseIntOptions($instructions, 'cols');
+                        $custom_flds[$custom_fld]['rows'] = generator_tools::get_extra_parseIntOptions($instructions, 'rows');
+                        $custom_flds[$custom_fld]['max_length'] = generator_tools::get_extra_parseIntOptions($instructions, 'max_length');
                         $custom_flds[$custom_fld]['wysiwyg'] = generator_tools::get_extra_customBool($instructions, 'wysiwyg');
                         break;
 
                     case 'select_date':
-                        $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_size($instructions);
-                        $custom_flds[$custom_fld]['max_length'] = generator_tools::get_extra_max_length($instructions);
-                        $custom_flds[$custom_fld]['dateformat'] = generator_tools::get_extra_date_format($instructions);
+                        $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_parseIntOptions($instructions, 'size');
+                        $custom_flds[$custom_fld]['max_length'] = generator_tools::get_extra_parseIntOptions($instructions, 'max_length');
+                        $custom_flds[$custom_fld]['dateformat'] = generator_tools::get_extra_parseOptions($instructions, 'dateformat', true);
                         break;
 
                     case 'upload_file':
-                        $custom_flds[$custom_fld]['allow'] = generator_tools::get_extra_allow($instructions);
+                        $custom_flds[$custom_fld]['allow'] = generator_tools::get_extra_parseOptions($instructions, 'allow');
                         break;
 
                     case 'file_picker':
@@ -137,13 +137,13 @@ class generator_filters {
                         break;
 
                     case 'select_file':
-                        $custom_flds[$custom_fld]['allow'] = generator_tools::get_extra_allow($instructions);
-                        $custom_flds[$custom_fld]['dir'] = generator_tools::get_extra_dir($instructions);
-                        $custom_flds[$custom_fld]['exclude_prefix'] = generator_tools::get_extra_exclude_prefix($instructions);
+                        $custom_flds[$custom_fld]['allow'] = generator_tools::get_extra_parseOptions($instructions, 'allow');
+                        $custom_flds[$custom_fld]['dir'] = generator_tools::get_extra_parseOptions($instructions, 'dir', true);
+                        $custom_flds[$custom_fld]['exclude_prefix'] = generator_tools::get_extra_parseOptions($instructions, 'exclude_prefix');
                         break;
                     case 'key_value':
-                        $custom_flds[$custom_fld]['keyName'] = generator_tools::get_extra_keyName($instructions);
-                        $custom_flds[$custom_fld]['valueName'] = generator_tools::get_extra_valueName($instructions);
+                        $custom_flds[$custom_fld]['keyName'] = generator_tools::get_extra_parseOptions($instructions, 'key', true);
+                        $custom_flds[$custom_fld]['valueName'] = generator_tools::get_extra_parseOptions($instructions, 'value', true);
                         break;
 
                     case 'hr':
@@ -157,8 +157,8 @@ class generator_filters {
                         $custom_flds[$custom_fld]['headers'] = generator_tools::get_extra_tableheaders($instructions);
                         break;
                     case 'video':
-                        $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_size($instructions);
-                        $custom_flds[$custom_fld]['max_length'] = generator_tools::get_extra_max_length($instructions);
+                        $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_parseIntOptions($instructions, 'size');
+                        $custom_flds[$custom_fld]['max_length'] = generator_tools::get_extra_parseIntOptions($instructions, 'max_length');
                         break;
                 }
             }
