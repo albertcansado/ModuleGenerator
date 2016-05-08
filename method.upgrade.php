@@ -1,4 +1,9 @@
 ﻿<?php
+
+if( version_compare(phpversion(),'5.4.3') < 0 ) {
+    return "Minimum PHP version of 5.4.3 required";
+}
+
 $db = cmsms()->GetDb();
 $taboptarray = array('mysql' => 'TYPE=MyISAM');
 $dict = NewDataDictionary($db);

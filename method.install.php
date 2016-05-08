@@ -29,6 +29,10 @@
 if (!isset($gCms))
     exit;
 
+if( version_compare(phpversion(),'5.4.3') < 0 ) {
+    return "Minimum PHP version of 5.4.3 required";
+}
+
 $db = cmsms()->GetDb();
 $dict = NewDataDictionary($db);
 $taboptarray = array('mysql' => 'TYPE=MyISAM');
