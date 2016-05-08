@@ -97,6 +97,9 @@ class generator_filters {
                         break;
 
                     case 'color_picker':
+                        $custom_flds[$custom_fld]['alpha'] = generator_tools::get_extra_customBool($instructions, 'alpha');
+                        $custom_flds[$custom_fld]['empty'] = generator_tools::get_extra_customBool($instructions, 'empty');
+                        $custom_flds[$custom_fld]['format'] = generator_tools::get_extra_parseOptions($instructions, 'format', true, ['hex', 'hex3', 'rgb', 'hsl', 'name']);
                         break;
 
                     case 'page':
@@ -453,10 +456,40 @@ class generator_filters {
                     break;
 
                 case 'color_picker':
-                    $txt = '';
-                    $tmp = '<input type="color" data-hex="true" name="%s" value="%s"/>';
-                    $txt .= sprintf($tmp, $id . $name, $value);
-                    $obj->field = $txt;
+                    $attr = array();
+                    if (isset($custom_fld['alpha'])) {
+                        $attr[] = sprintf(
+                            'data-show-alpha="%s"',
+                            ($custom_fld['alpha']) ? 'true' : 'false'
+                        );
+                    }
+
+                    if (!empty($custom_fld['format'])) {
+                        $attr[] = 'data-preferred-format="' . $custom_fld['format'] . '"';
+                    }
+
+                    if (isset($custom_fld['empty'])) {
+                        $attr[] = sprintf(
+                            'data-allow-empty="%s"',
+                            ($custom_fld['empty']) ? 'true' : 'false'
+                        );
+                    }
+
+                    $obj->field = str_replace(
+                        array(
+                            '{{type}}',
+                            '{{name}}',
+                            '{{value}}',
+                            '{{attr}}'
+                        ),
+                        array(
+                            (isset($custom_fld['empty']) && $custom_fld['empty']) ? 'text' : 'color',
+                            $id . $name,
+                            $value,
+                            implode(' ', $attr)
+                        ),
+                        '<input type="{{type}}" class="cms_color_input" name="{{name}}" value="{{value}}" {{attr}}/>'
+                    );
                     break;
 
                 case 'module_link':

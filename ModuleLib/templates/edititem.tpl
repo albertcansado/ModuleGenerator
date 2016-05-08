@@ -89,10 +89,8 @@
     </style>
 
     <script type="text/javascript">
-        $.fn.mColorPicker.init.replace = false;
         $(document).ready(function(){
-            $('#itemlist').tableDnD();
-            $('.js-tablesorter').tableDnD();
+            $('#itemlist', '.js-tablesorter').tableDnD();
             $('#galleryform form').submit(function() {
                 var data = new Array;
                 $('table#itemlist tr').each(function(i,tr) {
@@ -101,7 +99,12 @@
                 data = data.join(',');
                 $('#serialdata').val(data);
             });
-            $('input[type=color]').mColorPicker({imageFolder:'../modules/ModuleGenerator/images/'});
+            $('.cms_color_input').spectrum({
+                showInput: true,
+                preferredFormat: "hex",
+                cancelText: "{/literal}{'cancel'|lang}{literal}",
+                chooseText: "{/literal}{'apply'|lang}{literal}",
+            });
             new DropdownAdd({
                 selector: ".js-dropdown-add",
                 url: "{/literal}{$dropdownLink}{literal}",
