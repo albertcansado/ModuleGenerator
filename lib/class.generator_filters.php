@@ -119,7 +119,7 @@ class generator_filters {
                         $custom_flds[$custom_fld]['cols'] = generator_tools::get_extra_cols($instructions);
                         $custom_flds[$custom_fld]['rows'] = generator_tools::get_extra_rows($instructions);
                         $custom_flds[$custom_fld]['max_length'] = generator_tools::get_extra_max_length($instructions);
-                        $custom_flds[$custom_fld]['wysiwyg'] = generator_tools::get_extra_wysiwyg($instructions);
+                        $custom_flds[$custom_fld]['wysiwyg'] = generator_tools::get_extra_customBool($instructions, 'wysiwyg');
                         break;
 
                     case 'select_date':

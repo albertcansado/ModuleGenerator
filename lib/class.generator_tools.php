@@ -956,30 +956,6 @@ class generator_tools {
     }
 
     /**
-     * Get Extra: WYSIWYG
-     * @param array $instructions Instructions
-     * @return bool Returns true if WYSIWYG is to be enabled, or false otherwise
-     */
-    public static function get_extra_wysiwyg($instructions) {
-        if (!is_array($instructions))
-            return;
-
-        foreach ($instructions as $instruction) {
-// wysiwyg[1]
-// wysiwyg[0]
-// wysiwyg[true]
-// wysiwyg[false]
-            if (preg_match('/^wysiwyg\[(.+)\]$/i', $instruction, $matches)) {
-                if ($matches[1] == 'true' || $matches[1] == '1') {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Get Extra: Module params
      * @param array $instructions Instructions
      * @return array Returns an array of options if specified
@@ -1240,6 +1216,30 @@ class generator_tools {
     }
 
     /**
+     * Valid values are:
+     *  - varname[0|false] // false
+     *  - varname[1|true] // true
+     *
+     * @param array $instructions Instructions
+     * @param string $varname Option name to check
+     * @return bool Returns true if varname option is set to true or false otherwise
+     */
+    public static function get_extra_customBool($instructions, $varname = '') {
+        if (!is_array($instructions))
+            return;
+
+        foreach ($instructions as $instruction) {
+            if (preg_match('/^' . $varname . '\[(.+)\]$/i', $instruction, $matches)) {
+                if ($matches[1] == 'true' || $matches[1] == '1') {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Is valid alias
      * @param string $alias
      * @return bool Returns true if string in question is a valid alias, or
@@ -1425,45 +1425,6 @@ class generator_tools {
         $db->Execute($query, array($image_id));
 
         return true;
-    }
-
-    /**
-     * Get Extra: br
-     * @param array $instructions Instructions
-     * @return bool Returns true if br is to be enabled, or false otherwise
-     */
-    public static function get_extra_br($instructions) {
-        if (!is_array($instructions))
-            return;
-
-        foreach ($instructions as $instruction) {
-// br[1]
-// br[0]
-// br[true]
-// br[false]
-            if (preg_match('/^br\[(.+)\]$/i', $instruction, $matches)) {
-                if ($matches[1] == 'true' || $matches[1] == '1') {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public static function get_extra_customBool($instructions, $varname = '') {
-        if (!is_array($instructions))
-            return;
-
-        foreach ($instructions as $instruction) {
-            if (preg_match('/^' . $varname . '\[(.+)\]$/i', $instruction, $matches)) {
-                if ($matches[1] == 'true' || $matches[1] == '1') {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 
 // Functions for address lookup field definition
