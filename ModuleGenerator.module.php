@@ -116,7 +116,7 @@ class ModuleGenerator extends CGExtensions {
     }
 
     public function GetDependencies() {
-        return array('CGExtensions' => '1.31', 'ExtendedTools' => '1.3.3', 'CGSmartImage' => '1.9.5');
+        return array('CGExtensions' => '1.31', 'ExtendedTools' => '2.0.0', 'CGSmartImage' => '1.9.5');
     }
 
     public function MinimumCMSVersion() {
