@@ -163,6 +163,9 @@ if (!$smarty->isCached($this->GetDatabaseResource($thetemplate), $cache_id, $com
             case 'title':
                 $sortby = 'title';
                 break;
+            case 'category':
+                $sortby = 'category_id';
+                break;
             case 'created':
                 $sortby = 'create_date';
                 break;
