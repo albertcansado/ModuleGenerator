@@ -239,37 +239,36 @@
                 <div class="pageoverflow">
                     {if !$field->hidename}<p class="pagetext">{$field->prompt}:</p>{/if}
                     <p class="pageinput">
-                    {if !empty($field->help)}({$field->help})<br />{/if}
-                    {$field->field}
-                    {if isset($field->filename)}<br />
-                    {capture assign="src"}{$field->file_location}/{$field->filename}{/capture}                     
-                {capture assign="srcpath"}{$field->filepath_location}/{$field->filename}{/capture}                     
-                {if $field->is_image}
-                    {if $image_size_admin_width && $image_size_admin_height}
-                        {cms_module module="CGSmartImage" src=$src alt=$field->filename filter_croptofit="`$image_size_admin_width`,`$image_size_admin_height`" style="margin:5px 0;"}    
-                    {elseif $image_size_admin_width}
-                        {cms_module module="CGSmartImage" src=$src alt=$field->filename filter_resize="w,`$image_size_admin_width`" style="margin:5px 0;"}    
-                    {elseif $image_size_admin_height}
-                        {cms_module module="CGSmartImage" src=$src alt=$field->filename filter_resize="h,`$image_size_admin_height`" style="margin:5px 0;"}    
+                        {if !empty($field->help)}({$field->help})<br />{/if}
+                        {$field->field}
+                        {if isset($field->filename)}
+                            <br />
+                            {capture assign="src"}{$field->file_location}/{$field->filename}{/capture}                     
+                            {capture assign="srcpath"}{$field->filepath_location}/{$field->filename}{/capture}                     
+                            {if $field->is_image}
+                                {if $image_size_admin_width && $image_size_admin_height}
+                                    {cms_module module="CGSmartImage" src=$src alt=$field->filename filter_croptofit="`$image_size_admin_width`,`$image_size_admin_height`" style="margin:5px 0;"}    
+                                {elseif $image_size_admin_width}
+                                    {cms_module module="CGSmartImage" src=$src alt=$field->filename filter_resize="w,`$image_size_admin_width`" style="margin:5px 0;"}    
+                                {elseif $image_size_admin_height}
+                                    {cms_module module="CGSmartImage" src=$src alt=$field->filename filter_resize="h,`$image_size_admin_height`" style="margin:5px 0;"}    
+                                {/if}
+                            {/if}
+                            <br />
+                            {$field->delete_file} {$field->filename}<br />
+                        {/if}
+                    </p>
+                </div>
+            {else}
+                <div class="pageoverflow">
+                    <p class="pagetext">{$field->prompt}</p>
+                    {if $field->extra}
+                        <p class="pageinput">{$field->extra}</p>
                     {/if}
-                {/if}
-                <br />
-                {$field->delete_file} {$field->filename}<br />
+                </div>
             {/if}
-        </p>
-    </div>
-{else}
-    <div class="pageoverflow">
-        <p class="pagetext">{$field->prompt}</p>
-        {if $field->extra}
-            <p class="pageinput">            
-                {$field->extra}
-            </p>
         {/if}
-    </div>
-{/if}
-{/if}
-{/foreach}
+    {/foreach}
 {/if}
 {*<div class="pageoverflow">
 <p class="pagetext">&nbsp;</p>
