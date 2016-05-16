@@ -24,6 +24,13 @@
                 url: "{/literal}{$dropdownLink}{literal}",
                 prefix: "{/literal}{$actionid}{literal}"
             });
+            new Conditions(".js-condition", {
+                uploader: {
+                    id: "{/literal}{$itemid}{literal}",
+                    url: '../modules/ModuleGenerator/js/plupload/uploadcon.php',
+                    module: "{/literal}{$mod->GetName()|urlencode}{literal}"
+                }
+            });
         });
 
         function toggleDisplay(elem) {

@@ -85,3 +85,110 @@
     cursor: pointer;
     display: block;
 }
+
+
+/** Conditions **/
+.fd-left {
+    float: left;
+}
+.fd-cond {
+    max-width: 850px;
+    width: 100%;
+}
+
+.fd-cond__content {
+    border: 1px solid #ddd;
+    margin-top: 10px;
+}
+.fd-cond__header {
+    background: #232323 url(themes/OneEleven/images/layout/sprite_repeatx.png) 831px -99px repeat-x;
+    color: #fa8004;
+    height: 45px;
+    line-height: 45px;
+    text-shadow: -1px -1px 0 #000;
+    white-space: nowrap;
+}
+.fd-cond__header .fd-cond__col {
+    padding: 0 1%;
+}
+
+
+.fd-cond__item {
+    background-color: #fafafa;
+    display: table;
+    border-collapse: separate;
+}
+.fd-cond__item:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.fd-cond__item + .fd-cond__item {
+    border-top: 2px solid #ddd;
+}
+
+.fd-cond__col {
+    display: table-cell;
+    padding: 1%;
+    vertical-align: top;
+}
+
+.fd-cond__col--first,
+.fd-cond__col--form {
+    width: 64%;
+}
+.fd-cond__col--last,
+.fd-cond__col--opt {
+    min-width: 34px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.fd-cond__col .ui-button {
+    margin-top: 8px;
+}
+
+.fd-cond__items,
+.fd-cond__conditions {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0;
+}
+
+.fd-cond__form {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+.fd-cond__form + .fd-cond__form {
+    padding-top: 10px;
+}
+.fd-cond__form .fd-cond__input {
+    width: 30%;
+}
+.fd-cond__form .fd-cond__input--opt {
+    line-height: 47px;
+    text-align: right;
+    width: 6%;
+}
+.fd-cond__form .fd-cond__input--submit {
+    padding-top: 10px;
+    text-align: right;
+}
+.fd-cond__form .fd-cond__input + .fd-cond__input {
+    margin-left: 2%;
+}
+
+.fd-cond__label {
+    font-weight: bold;
+    display: block;
+}
+.fd-cond__input .cms_dropdown {
+    width: 100%;
+}
+.fd-cond__input .cms_textfield,
+.fd-cond__item .cms_browse {
+    width: 93%;
+}
+
+.fd-cond__delete {
+    cursor: pointer;
+}

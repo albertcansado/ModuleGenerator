@@ -159,6 +159,7 @@ class ModuleGenerator extends CGExtensions {
             'lookup.min',
             'jtTable.min',
             'dropdownAdd.min',
+            'conditions.min',
             'jquery.tablednd.min'
         ];
 
