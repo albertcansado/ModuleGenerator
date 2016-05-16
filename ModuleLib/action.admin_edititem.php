@@ -47,9 +47,7 @@ if (is_array($all_fields)) {
     for ($i = 0; $i < count($all_fields); $i++) {
         switch ($all_fields[$i]['type']) {
             case 'textarea':
-                break;
             case 'static':
-                break;
             case 'tab':
                 break;
             default:
