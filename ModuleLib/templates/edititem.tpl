@@ -1,7 +1,6 @@
 {assign var="module" value=$mod}
 {assign var="oldactionid" value=$actionid}
 
-
 {literal}
     <script type="text/javascript">
         $(document).ready(function(){
@@ -287,82 +286,71 @@
         {/if}
 
             {if $module->GetPreference('has_gallery') && isset($item_id)}
-
-                {$module->StartTab('gallery')}              
-
+                {$module->StartTab('gallery')}
                 <div id="container">
                     <div id="filelist"></div>
                     <a id="pickfiles" href="javascript:;">{$module->Lang('add_files')}</a> 
                 </div>
 
-
                 {literal}
-
-                    <script type="text/javascript">
+                <script type="text/javascript">
                    $(function() {
-        var uploader = new plupload.Uploader({
-                runtimes : 'gears,html5,flash,silverlight,browserplus',
-                browse_button : 'pickfiles',
-                container : 'container',
-                max_file_size : '10mb',
-                url : '../modules/ModuleGenerator/js/plupload/upload.php?gallery_path={/literal}{$gallery_path|urlencode}{literal}',
-                flash_swf_url : '../modules/ModuleGenerator/js/plupload/plupload.flash.swf',
-                silverlight_xap_url : '../modules/ModuleGenerator/js/plupload/plupload.silverlight.xap',
-                filters : [
-                        {title : "Image files", extensions : "jpg,gif,png"}
-                ]
-        });
+                        var uploader = new plupload.Uploader({
+                            runtimes : 'gears,html5,flash,silverlight,browserplus',
+                            browse_button : 'pickfiles',
+                            container : 'container',
+                            max_file_size : '10mb',
+                            url : '../modules/ModuleGenerator/js/plupload/upload.php?gallery_path={/literal}{$gallery_path|urlencode}{literal}',
+                            flash_swf_url : '../modules/ModuleGenerator/js/plupload/plupload.flash.swf',
+                            silverlight_xap_url : '../modules/ModuleGenerator/js/plupload/plupload.silverlight.xap',
+                            filters : [
+                                {title : "Image files", extensions : "jpg,gif,png"}
+                            ]
+                        });
 
-        uploader.bind('Init', function(up, params) {
-                //$('#filelist').html("<div>Current runtime: " + params.runtime + "</div>");
-        });
+                        /*uploader.bind('Init', function(up, params) {
+                            //$('#filelist').html("<div>Current runtime: " + params.runtime + "</div>");
+                        });*/
 
-        $('#uploadfiles').click(function(e) {
-                uploader.start();
-                e.preventDefault();
-        });
+                        $('#uploadfiles').click(function(e) {
+                            uploader.start();
+                            e.preventDefault();
+                        });
 
-        uploader.init();
+                        uploader.init();
 
-        uploader.bind('FilesAdded', function(up, files) {
-                $.each(files, function(i, file) {
-                        $('#filelist').append(
-                                '<div id="' + file.id + '">' +
-                                file.name + ' (' + plupload.formatSize(file.size) + ') <b></b>' +
-                        '</div>');
-                });
+                        uploader.bind('FilesAdded', function(up, files) {
+                            $.each(files, function(i, file) {
+                                $('#filelist').append('<div id="' + file.id + '">' +
+                                    file.name + ' (' + plupload.formatSize(file.size) + ') <b></b>' +
+                                '</div>');
+                            });
                     
-                up.refresh(); // Reposition Flash/Silverlight
-                      uploader.start();
-        });
+                            up.refresh(); // Reposition Flash/Silverlight
+                            uploader.start();
+                        });
 
-        uploader.bind('UploadProgress', function(up, file) {
-                $('#' + file.id + " b").html(file.percent + "%");
-        });
+                        uploader.bind('UploadProgress', function(up, file) {
+                            $('#' + file.id + " b").html(file.percent + "%");
+                        });
 
-        uploader.bind('Error', function(up, err) {
-                $('#filelist').append("<div>Error: " + err.code +
-                        ", Message: " + err.message +
-                        (err.file ? ", File: " + err.file.name : "") +
-                        "</div>"
-                );
+                        uploader.bind('Error', function(up, err) {
+                            $('#filelist').append("<div>Error: " + err.code +
+                                ", Message: " + err.message +
+                                (err.file ? ", File: " + err.file.name : "") +
+                            "</div>");
 
-                up.refresh(); // Reposition Flash/Silverlight
-        });
+                            up.refresh(); // Reposition Flash/Silverlight
+                        });
 
-        uploader.bind('FileUploaded', function(up, file) {
-                $('#' + file.id + " b").html("100%");
-                    
-                       if( (uploader.total.uploaded ) == uploader.files.length)
-         {
-        window.location = '{/literal}{$redirect_url|replace:'&amp;':'&'}{literal}';
-          }
-        });
-            
-            
-            
-});
-                    </script>
+                        uploader.bind('FileUploaded', function(up, file) {
+                            $('#' + file.id + " b").html("100%");
+                            if( (uploader.total.uploaded ) == uploader.files.length) {
+                                window.location = '{/literal}{$redirect_url|replace:'&amp;':'&'}{literal}';
+                            }
+                        });
+                    });
+                </script>
                 {/literal}
                 {$endform}
 {*</div>*}
