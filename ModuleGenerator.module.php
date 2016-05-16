@@ -153,6 +153,7 @@ class ModuleGenerator extends CGExtensions {
 
         // Attach JS libraries
         $scripts = [
+            'utils',
             'spectrum.min',
             'keyValue.min',
             'lookup.min',
