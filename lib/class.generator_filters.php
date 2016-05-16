@@ -163,6 +163,8 @@ class generator_filters {
                         $custom_flds[$custom_fld]['size'] = generator_tools::get_extra_parseIntOptions($instructions, 'size');
                         $custom_flds[$custom_fld]['max_length'] = generator_tools::get_extra_parseIntOptions($instructions, 'max_length');
                         break;
+                    case 'conditional':
+                        break;
                 }
             }
         }
@@ -226,6 +228,7 @@ class generator_filters {
                 $newValue = array_values(json_decode($field['value'], true));
                 break;
             case 'video':
+            case 'conditional':
                 $newValue = json_decode($field['value'], true);
                 break;
             case 'textbox':
@@ -832,6 +835,128 @@ jQuery(document).ready(function($){
                             $select
                         ),
                         '<div class="row"><div class="grid_6"><label>{{labelId}}<span class="label__helper">{{helpId}}</span></label><br>{{input}}</div><div class="grid_6"><label>{{labelType}}</label><br>{{select}}</div></div>'
+                    );
+                    break;
+                case 'conditional':
+
+                    $admintheme = cmsms()->get_variable('admintheme');
+                    $themeImgPath = "themes/{$admintheme->themeName}/images/icons/";
+
+                    $db = cmsms()->GetDb();
+                    $query = 'SELECT item_id, title, category_name FROM ' . cms_db_prefix() . 'module_' . $mod->_GetModuleAlias() . '_item as `i` INNER JOIN ' . cms_db_prefix() . 'module_' . $mod->_GetModuleAlias() . '_categories as `c` ON (`c`.`category_id` = `i`.`category_id`) WHERE active = 1 AND `i`.category_id != 1 ORDER BY category_name';
+                    $elements = $db->GetAll($query);
+
+                    $tags = [
+                        '<option value="">' . $mod->Lang('select_default') . '</option>',
+                        '<option value="*">All</option>'
+                    ];
+                    if ($elements) {
+                        $cat = null;
+                        foreach ($elements as $elem) {
+                            if ($cat !== $elem['category_name']) {
+                                if (!empty($tags)) {
+                                    $tags[] = '</optgroup>';
+                                }
+                                $cat = $elem['category_name'];
+                                $tags[] = '<optgroup label="' . $cat . '">';
+                            }
+                            $tags[] = '<option value="' . $elem['item_id'] . '">' . $elem['title'] . '</option>';
+                        }
+                        $tags[] = '</optgroup>';
+                    }
+                    $selectFields = '<select class="cms_dropdown" name="field">' . implode('', $tags) . '</select>';
+
+
+                    // Form
+                    $ruleOptions = [
+                        '' => $mod->Lang('select_default'),
+                        '=' => 'Equal',
+                        '!=' => 'Not Equal'
+                    ];
+                    $label = '<label class="fd-cond__label">%s</label>';
+                    $addBtn = '<button class="ui-button ui-state-default ui-corner-all ui-button-text-icon-primary %s"><span class="ui-button-icon-primary ui-icon ui-icon-plus"></span><span class="ui-button-text">%s</span></button>';
+                    $deleteBtn = '<span class="fd-cond__delete fd-cond__delete--%s" title="%s">%s</span>';
+                    
+                    $formTemplate = '
+                        <div class="fd-cond__input fd-left">
+                            {{label_field}}{{select_fields}}
+                        </div>
+                        <div class="fd-cond__input fd-left">
+                            {{label_rule}}{{select_rules}}
+                        </div>
+                        <div class="fd-cond__input fd-left">
+                            {{label_value}}{{input_value}}
+                        </div>
+                        <div class="fd-cond__input--opt fd-left">
+                            {{delete}}
+                        </div>';
+                    
+                    $form = str_replace(
+                        ['{{label_field}}', '{{select_fields}}', '{{label_rule}}', '{{select_rules}}', '{{label_value}}', '{{input_value}}', '{{delete}}'],
+                        [
+                            sprintf($label, 'Field'),
+                            $selectFields,
+                            sprintf($label, 'Rule'),
+                            $mod->CreateInputDropdown('', 'rule', array_flip($ruleOptions), -1, ''),
+                            sprintf($label, 'Value'),
+                            $mod->CreateInputText('', 'value', '', 50, 255),
+                            sprintf($deleteBtn, 'form', $mod->Lang('delete'), $admintheme->DisplayImage("icons/system/delete.gif"))
+                        ],
+                        $formTemplate
+                    );
+                    
+                    $formUpload = sprintf($label, 'Image to view') . $mod->CreateFileUploadInput('', 'image');
+
+                    $hiddenTextarea = '<textarea name="' . $id . $name . '" class="fd-cond-textarea is-hidden" style="display: none">' . $obj->value . '</textarea>';
+                    
+                    $template = '<div class="fd-cond js-condition">
+                        {{btn}}
+                        <div class="fd-cond__content">
+                            <header class="fd-cond__header cf">
+                                <div class="fd-cond__col fd-cond__col--first fd-left">
+                                    {{text_cond}}
+                                </div>
+                                <div class="fd-cond__col fd-cond__col--middle fd-left">
+                                    {{text_result}}
+                                </div>
+                                <div class="fd-cond__col fd-cond__col--last fd-left"></div>
+                            </header>
+                            <section class="fd-cond__inner">
+                                <ul class="fd-cond__items"></ul>
+                            </section>
+                            <div class="is-hidden" data-template="row">
+                                <div class="fd-cond__col fd-cond__col--form">
+                                    <div class="fd-cond__form-inner"></div>
+                                    {{addMore}}
+                                </div>
+                                <div class="fd-cond__col fd-cond__col--upl">
+                                    {{form_upload}}
+                                </div>
+                                <div class="fd-cond__col fd-cond__col--opt">
+                                    {{deleteBtn}}
+                                </div>
+                            </div>
+                            <div class="is-hidden" data-template="form">
+                                {{form}}
+                            </div>
+                        </div>
+                        {{textarea}}
+                        <button class="fd-hidden" id="browse"></button>
+                    </div>';
+
+                    $obj->field = str_replace(
+                        ['{{btn}}','{{text_cond}}','{{text_result}}','{{form}}', '{{form_upload}}', '{{deleteBtn}}', '{{textarea}}', '{{addMore}}'],
+                        [
+                            sprintf($addBtn, 'js-add', $mod->Lang("json_add")),
+                            'Conditions',
+                            'Result',
+                            $form,
+                            $formUpload,
+                            sprintf($deleteBtn, 'row', $mod->Lang('delete'), $admintheme->DisplayImage("icons/system/delete.gif")),
+                            $hiddenTextarea,
+                            sprintf($addBtn, 'js-addrow', 'Add more conditions')
+                        ],
+                        $template
                     );
                     break;
             }

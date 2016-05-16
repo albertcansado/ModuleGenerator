@@ -71,7 +71,8 @@ class generator_tools {
             'hr' => $module->Lang('hr'),
             'lookup' => $module->Lang('lookup'),
             'json' => $module->Lang('json'),
-            'video' => $module->Lang('video')
+            'video' => $module->Lang('video'),
+            'conditional' => 'Conditional'
         );
 
         return $types;
