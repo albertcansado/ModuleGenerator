@@ -167,7 +167,14 @@ class ModuleGenerator extends CGExtensions {
         }
 
         // Attach CSS libraries
-        $output[] = '<link rel="stylesheet" href="' . $module->GetModuleURLPath() . '/js/spectrum.css" />';
+        $css = [
+            'spectrum',
+            'fielddef_styles'
+        ];
+        $cssTag = '<link rel="stylesheet" href="' . $module->GetModuleURLPath() . '/css/%s.css" />';
+        foreach ($css as $file) {
+            $output[] = sprintf($cssTag, $file);
+        }
 
         // Gallery Scripts
         if ($this->GetPreference('has_gallery')) {
