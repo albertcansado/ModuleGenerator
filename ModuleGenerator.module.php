@@ -80,7 +80,7 @@ class ModuleGenerator extends CGExtensions {
     }
 
     public function GetVersion() {
-        return '3.0.3';
+        return '3.0.4';
     }
 
     public function AllowAutoUpgrade() {
@@ -116,7 +116,7 @@ class ModuleGenerator extends CGExtensions {
     }
 
     public function GetDependencies() {
-        return array('CGExtensions' => '1.31', 'ExtendedTools' => '1.3.3', 'CGSmartImage' => '1.9.5');
+        return array('CGExtensions' => '1.31', 'ExtendedTools' => '2.0.0', 'CGSmartImage' => '1.9.5');
     }
 
     public function MinimumCMSVersion() {
@@ -153,6 +153,7 @@ class ModuleGenerator extends CGExtensions {
 
         // Attach JS libraries
         $scripts = [
+            'utils',
             'spectrum.min',
             'keyValue.min',
             'lookup.min',
@@ -167,7 +168,14 @@ class ModuleGenerator extends CGExtensions {
         }
 
         // Attach CSS libraries
-        $output[] = '<link rel="stylesheet" href="' . $module->GetModuleURLPath() . '/js/spectrum.css" />';
+        $css = [
+            'spectrum',
+            'fielddef_styles'
+        ];
+        $cssTag = '<link rel="stylesheet" href="' . $module->GetModuleURLPath() . '/css/%s.css" />';
+        foreach ($css as $file) {
+            $output[] = sprintf($cssTag, $file);
+        }
 
         // Gallery Scripts
         if ($this->GetPreference('has_gallery')) {

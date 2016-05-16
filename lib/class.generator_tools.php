@@ -948,7 +948,7 @@ class generator_tools {
         $params = array();
 
         foreach ($instructions as $instruction) {
-            if (preg_match('/^module_view\=\[([^\]]*)\]$/i', $instruction, $matches)) {
+            if (preg_match('/^module_view\[([^\]]*)\]$/i', $instruction, $matches)) {
                 $options = explode(',', $matches[1]);
                 if (!empty($options)) {
                     $options = array_map('trim', $options);
