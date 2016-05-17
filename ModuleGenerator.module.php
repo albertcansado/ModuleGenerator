@@ -162,6 +162,11 @@ class ModuleGenerator extends CGExtensions {
             'jquery.tablednd.min'
         ];
 
+        // Gallery Scripts
+        if ($this->GetPreference('has_gallery')) {
+            $scripts[] = 'plupload/plupload.full.min';
+        }
+
         $scriptTag = '<script type="text/javascript" src="' . $module->GetModuleURLPath() . '/js/%s.js"></script>';
         foreach ($scripts as $script) {
             $output[] = sprintf($scriptTag, $script);
@@ -175,17 +180,6 @@ class ModuleGenerator extends CGExtensions {
         $cssTag = '<link rel="stylesheet" href="' . $module->GetModuleURLPath() . '/css/%s.css" />';
         foreach ($css as $file) {
             $output[] = sprintf($cssTag, $file);
-        }
-
-        // Gallery Scripts
-        if ($this->GetPreference('has_gallery')) {
-            $output[] = '<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>';
-            $plupload_libs = array('plupload.js', 'plupload.gears.js', 'plupload.silverlight.js', 'plupload.flash.js', 'plupload.browserplus.js', 'plupload.html4.js', 'plupload.html5.js');
-            foreach ($plupload_libs as $plupload_lib) {
-                $fn = $module->GetModuleURLPath() . '/js/plupload/' . $plupload_lib;
-                $output[] = '<script type="text/javascript" src="' . $fn . '"></script>' . "\n";
-            }
-            $output[] = '<!-- <script type="text/javascript"  src="http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js"></script> -->';
         }
 
         return implode("", $output);
