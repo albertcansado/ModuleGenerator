@@ -306,7 +306,7 @@ class generator_tools {
 
 
 
-            $prettyurl = generator_tools::get_pretty_url($this, generator_tools::get_prefix($mod) . '/c', $row['category_id'], $row['category_alias'], ($default_detailpage == -1 && !isset($params["detailpage"]) ? '' : $detailpage), $categorytemplate);
+            $prettyurl = generator_tools::get_pretty_url($mod, generator_tools::get_prefix($mod) . '/c', $row['category_id'], $row['category_alias'], ($default_detailpage == -1 && !isset($params["detailpage"]) ? '' : $detailpage), $categorytemplate);
             $row['url'] = $mod->CreateFrontendLink($id, $returnid, 'default', '', array('category_id' => $row['category_id'], 'categorytemplate' => $categorytemplate), '', true, isset($params["inline"]) ? 1 : 0, '', false, $prettyurl);
             $row["item_id"] = $row["category_id"];
             $row['file_location'] = generator_tools::file_location($mod, $row, false);
