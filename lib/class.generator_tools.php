@@ -269,7 +269,7 @@ class generator_tools {
                 $fielddefs = array();
                 for ($i = 0; $i < count($tmp); $i++) {
                     $obj = $tmp[$i];
-                    $fielddefs[$obj->alias] = $obj;
+                    $fielddefs[$obj['alias']] = $obj;
                 }
             }
         }
