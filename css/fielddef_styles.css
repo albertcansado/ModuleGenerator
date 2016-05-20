@@ -9,6 +9,11 @@
     width: 90%;
 }
 
+/** KeyValue **/
+.kv-input {
+    width: 93%;
+}
+
 /** Table **/
 .jt-hidden {
     display: none;
