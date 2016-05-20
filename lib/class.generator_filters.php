@@ -201,7 +201,7 @@ class generator_filters {
             case 'dropdown':
                 $extra = explode(';', $field['extra']);
                 $options = generator_tools::get_extra_options($extra);
-                $multiple = generator_tools::get_extra_multiple($extra);
+                $multiple = generator_tools::get_extra_customBool($extra, 'multiple');
 
                 if (!empty($multiple) && is_int($multiple)) {
                     // Mutiple options
