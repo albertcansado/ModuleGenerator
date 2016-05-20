@@ -149,7 +149,7 @@ $smarty->assign('hidename_text', $this->Lang('fielddef_hidename'));
 $smarty->assign('input_hidename', $this->CreateInputcheckbox($id, 'hidename', 1, $hidename));
 
 $smarty->assign('extra', $this->Lang('extra'));
-$smarty->assign('input_extra', $this->CreateInputText($id, 'extra', $extra, 100, 255));
+$smarty->assign('input_extra', $this->CreateTextArea(false, $id, $extra, 'extra', '', '', '', '', 10, 30));
 
 $smarty->assign('input_section', $this->CreateInputDropdown($id, 'section', array_flip(generator_tools::get_field_sections($this)), -1, $section));
 
