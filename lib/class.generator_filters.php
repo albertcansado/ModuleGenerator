@@ -326,6 +326,11 @@ class generator_filters {
                         if (($mod->GetName() != $custom_fld['params']["module"] && $module = cms_utils::get_module($custom_fld['params']["module"]) OR ($mod->GetName() == $custom_fld['params']["module"] && $module = $mod))) {
                             unset($custom_fld['params']["module"]);
                             $custom_fld['params']["items"] = true;
+
+                            if (!empty($custom_fld['params']['category']) && strpos($custom_fld['params']['category'], '|') !== false) {
+                                $custom_fld['params']['category'] = str_replace('|', ',', $custom_fld['params']['category']);
+                            }
+                            
                             $module->DoAction('default', $id, $custom_fld['params'], '');
 
                             $items = generator_tools::$items;
