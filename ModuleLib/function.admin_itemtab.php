@@ -102,7 +102,7 @@ if (isset($params['submit'])) {
 
     if ($this->GetPreference('filter_categories')) {
         $children = (int) $params['input_children'];
-        set_preference($uid, $this->_GetModuleAlias() . '__children', $children);
+        set_preference($uid, $this->_GetModuleAlias() . '_children', $children);
         $hierarchy = trim($params['hierarchy']);
         set_preference($uid, $this->_GetModuleAlias() . '_hierarchy', $hierarchy);
     }
