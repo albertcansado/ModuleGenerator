@@ -345,7 +345,7 @@ switch ($oldversion) {
     case '3.0.2':
         $modules = generator_opts::get_modules();
         $newContentFunction = "\t\treturn parent::_ModuleGetHeaderHtml();";
-        
+
         foreach ($modules as $module) {
             $mobject = cms_utils::get_module($module["module_name"]);
             if (!$mobject) {
@@ -363,6 +363,20 @@ switch ($oldversion) {
                 }
             }
         }
-        $current_version = "3.0.3";
+    case '3.0.4':
+        $modules = generator_opts::get_modules();
+        foreach ($modules as $module) {
+            $mobject = cms_utils::get_module($module["module_name"]);
+            if (!$mobject) {
+                continue;
+            }
+
+            // Verify module adding checksums
+            if (class_exists('\CGExtensions\internal\ModuleIntegrityCodeGenerator')) {
+                $generator = new \CGExtensions\internal\ModuleIntegrityCodeGenerator($mobject->GetName());
+                $generator->generate();
+            }
+        }
+        $current_version = "3.0.5";
 }
 ?>

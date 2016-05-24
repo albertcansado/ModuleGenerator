@@ -184,6 +184,12 @@ $this->CreatePermission($this->_GetModuleAlias() . '_modify_categories', $this->
 $this->CreatePermission($this->_GetModuleAlias() . '_all_category_visbile', $this->Lang('all_category_visbile'));
 $this->CreatePermission($this->_GetModuleAlias() . '_modify_option', $this->Lang('modify_option'));
 
+// Verify module adding checksums
+if (class_exists('\CGExtensions\internal\ModuleIntegrityCodeGenerator')) {
+    $generator = new \CGExtensions\internal\ModuleIntegrityCodeGenerator($this->GetName());
+    $generator->generate();
+}
+
 // Force Register Module
 $this->RegisterModulePlugin(true);
 ?>
