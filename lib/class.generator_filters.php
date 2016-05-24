@@ -347,7 +347,7 @@ class generator_filters {
                             $options = array($custom_fld['select_default'] => '') + $options;
                             $obj->field = $mod->CreateInputSelectList($id, $name . "[]", $options, (!empty($value) ? explode(',', $value) : array(0 => '')), $size);
                         } else {
-                            $obj->field = $mod->CreateInputHidden($id, $name . "[]", '') . $mod->CreateInputSelectList($id, $name . "[]", $options, (!empty($value) ? explode(',', $value) : array(0 => '')), $size);
+                            $obj->field = $mod->CreateInputSelectList($id, $name . "[]", $options, (!empty($value) ? explode(',', $value) : array(0 => '')), $size);
                         }
                     } else {
                         $options = array($this->_mod->Lang('select_default') => '') + $options;
