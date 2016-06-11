@@ -42,7 +42,7 @@
         {elseif (!isset($item_id) && !$field->editview) || isset($item_id)}
             {if $field->field}
                 <div class="pageoverflow">
-                    <p class="pagetext">{$field->prompt}:</p>
+                    {if !$field->hidename}<p class="pagetext">{$field->prompt}:</p>{/if}
                     <p class="pageinput">
                     {if !empty($field->help)}({$field->help})<br />{/if}
                     {$field->field}
