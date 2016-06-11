@@ -175,9 +175,9 @@
                 </div>
             {else}
                 <div class="pageoverflow">
-                    <p class="pagetext">{$field->prompt}</p>
-                    {if $field->extra}
-                        <p class="pageinput">{$field->extra}</p>
+                    {if !$field->hidename}<p class="pagetext">{$field->prompt}:</p>{/if}
+                    {if $field->help}
+                        <p class="pageinput">{$field->help}</p>
                     {/if}
                 </div>
             {/if}
