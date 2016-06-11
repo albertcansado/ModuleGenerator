@@ -147,7 +147,7 @@
     {foreach from=$custom_fielddef item='field'}
         {if $field->type == 'tab'}
             {$module->EndTab()}
-            {$module->StartTab($field->alias)}                
+            {$module->StartTab($field->alias)}            
         {elseif (!isset($item_id) && !$field->editview) || isset($item_id)}
             {if $field->field}
                 <div class="pageoverflow">
