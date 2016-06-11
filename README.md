@@ -13,12 +13,13 @@ CMSMS Version > 1.11 not 2.x
 * Key Value (Table)
 * Lookup (Geolocation)
 * Table
-* Video (Add Youtube and Vimeo Videos)
+* Video (Only videos from Youtube and Vimeo, other platforms may be added soon)
 
 ## New Features
-* Add Select from editItem view
-* Multiselect
+* Add Select Options from edit item form
+* Allow Multiselect (Select and Module fielddefs)
 * Depth options on summary view
+* Static field can be decorated with CMSMS default messages styles (information, warning, error and success)
 * fix many bugs
 
 ...
