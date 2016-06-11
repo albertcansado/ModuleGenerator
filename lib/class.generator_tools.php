@@ -832,7 +832,7 @@ class generator_tools {
             return $results;
 
         $found = false;        
-        $regex = ((bool)$isSimple) ? '/^' . $optionName . '\[(.+)\]$/i' : '/^' . $optionName . '\[([^,]+(,[^,]+)*)\]$/i';
+        $regex = ((bool)$isSimple) ? '/^' . $optionName . '=?\[(.+)\]$/i' : '/^' . $optionName . '=?\[([^,]+(,[^,]+)*)\]$/i';
         while ((($instruction = array_pop($instructions)) !== null) && !$found)  {
             if (preg_match($regex, $instruction, $matches)) {
                 $found = true;
