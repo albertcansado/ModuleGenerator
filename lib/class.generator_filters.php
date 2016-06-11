@@ -107,7 +107,7 @@ class generator_filters {
                         break;
 
                     case 'static':
-
+                        $custom_flds[$custom_fld]['format'] = generator_tools::get_extra_parseOptions($instructions, 'format', true, ['information', 'red', 'green', 'warning']);
                         break;
 
                     case 'tab':
@@ -515,7 +515,12 @@ class generator_filters {
                     break;
 
                 case 'static':
-                    $obj->field = false;
+                    if (!empty($custom_fld['format'])) {
+                        $obj->field = '<span class="' . $custom_fld['format'] . '">' . $obj->help . '</span>';
+                        $obj->help = null;
+                    } else {
+                        $obj->field = false;
+                    }
                     break;
 
                 case 'tab':
