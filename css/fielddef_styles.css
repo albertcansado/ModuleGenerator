@@ -54,7 +54,8 @@
 
 
 /** Dropdown **/
-.dropdown__btn {
+.dropdown__btn,
+.dropdown__btn.ui-button {
     margin: 0;
     vertical-align: top;
 }
