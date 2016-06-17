@@ -1,5 +1,31 @@
 {assign var="module" value=$mod}
 
+{literal}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#itemlist, .js-tablesorter').tableDnD();
+            $('.cms_color_input').spectrum({
+                showInput: true,
+                preferredFormat: "hex",
+                cancelText: "{/literal}{'cancel'|lang}{literal}",
+                chooseText: "{/literal}{'apply'|lang}{literal}",
+            });
+            new DropdownAdd({
+                selector: ".js-dropdown-add",
+                url: "{/literal}{$dropdownLink}{literal}",
+                prefix: "{/literal}{$actionid}{literal}"
+            });
+            new Conditions(".js-condition", {
+                uploader: {
+                    id: "{/literal}{$itemid}{literal}",
+                    url: '../modules/ModuleGenerator/js/plupload/uploadcon.php',
+                    module: "{/literal}{$mod->GetName()|urlencode}{literal}"
+                }
+            });
+        });
+    </script>
+{/literal}
+
 {$startform}
 
 {$module->StartTabHeaders()}
