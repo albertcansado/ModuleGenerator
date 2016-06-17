@@ -390,7 +390,7 @@ class generator_filters {
                     $obj->options = $options;
 
                     if ($isMultiple) {
-                        $obj->field = $mod->CreateInputSelectList($id, $name, $options, explode(',', $obj->value), $size);
+                        $obj->field = $mod->CreateInputSelectList($id, $name . '[]', $options, explode(',', $obj->value), $size);
                     } else {
                         $obj->field = $mod->CreateInputDropdown($id, $name, $options, -1, $value);
                     }
