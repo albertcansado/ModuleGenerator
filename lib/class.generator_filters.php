@@ -368,7 +368,7 @@ class generator_filters {
                     }
                     break;
                 case 'dropdown':
-                    $isMultiple = (isset($custom_fld['multiple']) && is_int($custom_fld['multiple']) && !$frontend);
+                    $isMultiple = (isset($custom_fld['multiple']) && (bool)$custom_fld['multiple'] && !$frontend);
                     $size = (!empty($custom_fld['size'])) ? (int)$custom_fld['size'] : 6;
 
                     $options = array();
