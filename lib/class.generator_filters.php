@@ -132,7 +132,7 @@ class generator_filters {
                         break;
 
                     case 'upload_file':
-                        $custom_flds[$custom_fld]['allow'] = generator_tools::get_extra_parseOptions($instructions, 'allow');
+                        $custom_flds[$custom_fld]['allow'] = generator_tools::get_extra_parseOptions($instructions, 'allow', false);
                         break;
 
                     case 'file_picker':
