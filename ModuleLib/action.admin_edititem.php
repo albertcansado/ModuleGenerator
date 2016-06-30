@@ -271,7 +271,7 @@ if (isset($params['preview'])) {
                 $validOpt = true;
                 
                 // Multiple or not...
-                if (isset($custom_flds[$fldid]['multiple'])) {
+                if (isset($custom_flds[$fldid]['multiple']) && $custom_flds[$fldid]['multiple']) {
                     $validOpt = !array_diff_key(array_flip((array)$value), $custom_flds[$fldid]['options']);
                 } else {
                     $validOpt = array_key_exists($value, $custom_flds[$fldid]['options']);
