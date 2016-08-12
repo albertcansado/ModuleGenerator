@@ -58,7 +58,7 @@ class generator_smarty_plugins
 
 	public static function _showVimeo($id, $params = array())
 	{
-		$url = '//player.vimeo.com/video/{{$id}}?title=0&byline=0&portrait=0&badge=0&color=cc6f1a';
+		$url = '//player.vimeo.com/video/{{id}}?title=0&byline=0&portrait=0&badge=0&color=cc6f1a';
 		return self::_videoIframe(
 			str_replace('{{id}}', $id, $url),
 			$params
