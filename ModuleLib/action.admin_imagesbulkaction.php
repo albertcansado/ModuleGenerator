@@ -19,7 +19,6 @@ if (isset($params['multiselect']) && is_array($params['multiselect']) && count($
 
     foreach ($params['multiselect'] as $image_id) {
         $res = $item_gallery->delete_image($image_id);
-        
     }
 }
 $this->Setmessage($this->Lang('operation_complete'));

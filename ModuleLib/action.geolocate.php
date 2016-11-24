@@ -45,7 +45,7 @@ if( !isset($params['address']) ) exit;
 $address = trim($params['address']);
 if( !$address ) exit;
 
-$handlers = ob_list_handlers(); 
+$handlers = ob_list_handlers();
 for ($cnt = 0; $cnt < sizeof($handlers); $cnt++) { ob_end_clean(); }
 
 $coords = generator_tools::geolocate($address);

@@ -18,7 +18,7 @@
 # However, as a special exception to the GPL, this software is distributed
 # as an addon module to CMS Made Simple.  You may not use this software
 # in any Non GPL version of CMS Made simple, or in any version of CMS
-# Made simple that does not indicate clearly and obviously in its admin 
+# Made simple that does not indicate clearly and obviously in its admin
 # section that the site was built with CMS Made simple.
 #
 # This program is distributed in the hope that it will be useful,
@@ -505,7 +505,7 @@ if (!$smarty->isCached($this->GetDatabaseResource($thetemplate), $cache_id, $com
                 }
             }
         }
-        
+
         $paramarray = array_merge($paramsfilter_ids, $paramarray, $paramsfilter_values);
 
 // recur
@@ -523,17 +523,17 @@ OR (c.recursive = 'daily' ))";
                     $fields[] = "e.value";
                 } else {
                     $where[] = "((c.item_date  > ? AND c.item_date  < ? AND (c.recursive = '' OR c.recursive IS NULL))
-                  OR (c.recursive = 'daily'  
+                  OR (c.recursive = 'daily'
 AND ((
 
 IF(?>?,
 IF(e.value >= ? OR e .value <= ?,1,0)
 ,IF(e.value >= ? AND e .value <= ?,1,0)
-) 
+)
 
-AND IF(e.value = ?, IF(DATE_FORMAT(c.item_date,'%H:%i') > ?,1,0),1) 
+AND IF(e.value = ?, IF(DATE_FORMAT(c.item_date,'%H:%i') > ?,1,0),1)
 AND IF(e.value = ?, IF(DATE_FORMAT(c.item_date,'%H:%i') < ?,1,0),1))
-)                  
+)
 ))";
                     $paramarray[] = trim($db->DBTimeStamp($date_from), "'");
                     $paramarray[] = trim($db->DBTimeStamp($date_to), "'");

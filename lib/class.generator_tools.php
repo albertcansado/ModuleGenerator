@@ -800,9 +800,9 @@ class generator_tools {
         if (!empty($instructions))
             return $instructions;
     }
-    
+
     /**
-     * 
+     *
      * Examples:
      *  - Single value:
      *      In: optionName[foo]
@@ -814,7 +814,7 @@ class generator_tools {
      *      In: optionsName[foo,bar]
      *      Allowed: ['foo']
      *      Out: ['foo']
-     *      
+     *
      *      // isSingle: true
      *      In: optionsName[foo]
      *      Allowed: ['bar']
@@ -831,7 +831,7 @@ class generator_tools {
         if (!is_array($instructions) || empty($optionName))
             return $results;
 
-        $found = false;        
+        $found = false;
         $regex = ((bool)$isSimple) ? '/^' . $optionName . '=?\[(.+)\]$/i' : '/^' . $optionName . '=?\[([^,]+(,[^,]+)*)\]$/i';
         while ((($instruction = array_pop($instructions)) !== null) && !$found)  {
             if (preg_match($regex, $instruction, $matches)) {

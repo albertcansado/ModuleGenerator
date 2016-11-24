@@ -33,9 +33,7 @@
 
 class generator_upgrade_proccess {
 
-    public function __construct() {
-        
-    }
+    public function __construct() {}
 
     public static function copy_files($mobject, $files = array(), $init = false) {
 

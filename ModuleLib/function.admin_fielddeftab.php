@@ -20,10 +20,10 @@ $fields = generator_tools::get_field_defs($this);
 $rowclass = 'row1';
 $entryarray = array();
 
-if (is_array($fields) && count($fields) > 0) {    
+if (is_array($fields) && count($fields) > 0) {
     foreach ($fields as $row) {
         $onerow = new stdClass();
-        
+
         $onerow->id = $row['fielddef_id'];
         $onerow->name = $this->CreateLink($id, 'admin_editfielddef', $returnid, $row['name'], array('fielddef_id' => $row['fielddef_id']));
         $onerow->alias = $row['alias'];

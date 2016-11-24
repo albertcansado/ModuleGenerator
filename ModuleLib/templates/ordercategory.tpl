@@ -21,7 +21,7 @@
     ajax_url+="&"+$(this).attr('name')+"="+$(this).attr('value');
     })
 
-    $('ul.sortable').nestedSortable({	
+    $('ul.sortable').nestedSortable({
                                             disableNesting: 'no-nest',
                                                 listType: 'ul',
                                             forcePlaceholderSize: true,
@@ -34,7 +34,7 @@
                                             toleranceElement: '> div'
                                     });
 
-     
+
     $(".reorder-pages form").submit(function(){
         var tree = $.toJSON(parseTree($('ul.sortable')));
         var ajax_res = false;

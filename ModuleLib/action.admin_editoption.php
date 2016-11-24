@@ -26,7 +26,6 @@ if ($params["tab"] == "mode") {
 
     extended_tools_opts::set_preferences($prefs, $params, $this);
 } else if ($params["tab"] == "optioneditingtab") {
-
     $prefs = array();
     $prefs[] = "has_gallery";
     $prefs[] = "gallery_sortorder";
@@ -50,7 +49,6 @@ if ($params["tab"] == "mode") {
 
     extended_tools_opts::set_preferences($prefs, $params, $this);
 } else if ($params["tab"] == "optionsearchtab") {
-
     $prefs = array();
     $prefs[] = "search_date_end";
     $prefs[] = "searchable";
@@ -63,10 +61,7 @@ if ($params["tab"] == "mode") {
             $db->Execute($query, array($custom_field, $fielddef_id));
         }
     }
-    
-    
 } else if ($params["tab"] == "optiontab") {
-
     $this->RemovePreference('custom_fields_default');
     if (isset($params["custom_fields_default"]))
         $this->SetPreference('custom_fields_default', implode(',', $params["custom_fields_default"]));

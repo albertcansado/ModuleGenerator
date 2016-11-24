@@ -35,7 +35,6 @@ if (isset($params['cancel']) || !isset($_POST['data'])) {
 }
 
 if (isset($_POST['data'])) {
-    
     function ordercontent_get_node_rec($str, $prefix = 'category_') {
         $gCms = cmsms();
         $tree = $gCms->GetHierarchyManager();
@@ -110,7 +109,7 @@ if (isset($_POST['data'])) {
         }
     }
 
-    
+
     // do the updates
     if (count($data2) > 0) {
         $db = $gCms->GetDb();
@@ -127,8 +126,6 @@ if (isset($_POST['data'])) {
         return;
     }
 }
-
-
 #
 # EOF
 #

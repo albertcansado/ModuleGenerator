@@ -21,7 +21,7 @@
 {if $mod->GetPreference('item_date_edit')}
 <div class="pageoverflow">
   <p class="pagetext">{$mod->Lang('date')}</p>
-  <p class="pageinput">  	
+  <p class="pageinput">
   {$mod->Lang('from')}
   {capture assign="idfromdate"}{$mod->GetActionId()}datefrom{/capture}
   {html_select_date field_order=DMY prefix=$idfromdate time=$date_from start_year="-10" end_year="+1"}
@@ -47,7 +47,7 @@
 
 
 <div class="content destinations">
-                
+
                     {$formstart}
                         <fieldset>
                             <legend>Filter</legend>

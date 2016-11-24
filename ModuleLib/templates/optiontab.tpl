@@ -89,7 +89,7 @@ else
         </p>
     </div>
 
-    <h3>{$mod->Lang('filter')} <span id="filter">{$input_filter}</span> </h3>    
+    <h3>{$mod->Lang('filter')} <span id="filter">{$input_filter}</span> </h3>
     <div id="filter-case" style="display:none">
         <div class="pageoverflow">
             <p class="pagetext">{$tmpmod->Lang('categories')}:</p>
@@ -109,7 +109,7 @@ else
 
 
     <input type="hidden" name="{$tmpactionid}tab" value="optiontab" />
-</fieldset>  
+</fieldset>
 <div class="pageoverflow">
     <p class="pagetext">&nbsp;</p>
     <p class="pageinput">{$submit}</p>

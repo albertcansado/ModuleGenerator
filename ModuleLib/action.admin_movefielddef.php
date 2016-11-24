@@ -13,7 +13,6 @@ for ($i = 0; $i < count($data); $i++) {
         continue;
     $query = 'UPDATE ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_fielddef SET position = ? WHERE fielddef_id = ?';
     $db->Execute($query, array($sorting++, $item_id));
-    
 }
 
 $this->RedirectToTab($id, $params["section"], array(), 'admin_fields');

@@ -12,21 +12,21 @@
     {foreach from=$custom_fielddef item='field'}
         {if $field->type == 'tab'}
             {$module->SetTabHeader($field->alias, $field->label)}
-        {/if}            
-    {/foreach}            
-{/if}            
+        {/if}
+    {/foreach}
+{/if}
 {$module->EndTabHeaders()}
 
 {$module->StartTabContent()}
 {$module->StartTab('category')}
 
 {if isset($imagesrc) && $imagesrc}
-    {if $image_size_admin_width && $image_size_admin_height}        
-        {cms_module module="CGSmartImage" src=$imagesrc alt='' filter_croptofit="`$image_size_admin_width`,`$image_size_admin_height`" style="margin:5px 0;"}    
+    {if $image_size_admin_width && $image_size_admin_height}
+        {cms_module module="CGSmartImage" src=$imagesrc alt='' filter_croptofit="`$image_size_admin_width`,`$image_size_admin_height`" style="margin:5px 0;"}
     {elseif $image_size_admin_width}
-        {cms_module module='CGSmartImage' src=$imagesrc alt='' filter_resize="w,`$image_size_admin_width`" style="margin:5px 0;"}    
+        {cms_module module='CGSmartImage' src=$imagesrc alt='' filter_resize="w,`$image_size_admin_width`" style="margin:5px 0;"}
     {elseif $image_size_admin_height}
-        {cms_module module="CGSmartImage" src=$imagesrc alt='' filter_resize="h,`$image_size_admin_height`" style="margin:5px 0;"}    
+        {cms_module module="CGSmartImage" src=$imagesrc alt='' filter_resize="h,`$image_size_admin_height`" style="margin:5px 0;"}
     {/if}
     {assign var='imagesize' value=$imagesrc|@getimagesize}
     <br />
@@ -38,7 +38,7 @@
     {foreach from=$custom_fielddef item='field'}
         {if $field->type == 'tab'}
             {$module->EndTab()}
-            {$module->StartTab($field->alias)} 
+            {$module->StartTab($field->alias)}
         {elseif (!isset($item_id) && !$field->editview) || isset($item_id)}
             {if $field->field}
                 <div class="pageoverflow">
@@ -47,15 +47,15 @@
                     {if !empty($field->help)}({$field->help})<br />{/if}
                     {$field->field}
                     {if isset($field->filename)}<br />
-                    {capture assign="src"}{$field->file_location}/{$field->filename}{/capture}                     
-                {capture assign="srcpath"}{$field->filepath_location}/{$field->filename}{/capture}                     
+                    {capture assign="src"}{$field->file_location}/{$field->filename}{/capture}
+                {capture assign="srcpath"}{$field->filepath_location}/{$field->filename}{/capture}
                 {if $field->is_image}
                     {if $image_size_admin_width && $image_size_admin_height}
-                        {cms_module module="CGSmartImage" src=$srcpath|replace:"`$root_url`":'' alt=$file->filename filter_croptofit="`$image_size_admin_width`,`$image_size_admin_height`" style="margin:5px 0;"}    
+                        {cms_module module="CGSmartImage" src=$srcpath|replace:"`$root_url`":'' alt=$file->filename filter_croptofit="`$image_size_admin_width`,`$image_size_admin_height`" style="margin:5px 0;"}
                     {elseif $image_size_admin_width}
-                        {cms_module module="CGSmartImage" src=$srcpath|replace:"`$root_url`":'' alt=$file->filename filter_resize="w,`$image_size_admin_width`" style="margin:5px 0;"}    
+                        {cms_module module="CGSmartImage" src=$srcpath|replace:"`$root_url`":'' alt=$file->filename filter_resize="w,`$image_size_admin_width`" style="margin:5px 0;"}
                     {elseif $image_size_admin_height}
-                        {cms_module module="CGSmartImage" src=$srcpath|replace:"`$root_url`":'' alt=$file->filename filter_resize="h,`$image_size_admin_height`" style="margin:5px 0;"}    
+                        {cms_module module="CGSmartImage" src=$srcpath|replace:"`$root_url`":'' alt=$file->filename filter_resize="h,`$image_size_admin_height`" style="margin:5px 0;"}
                     {/if}
                 {/if}
                 <br />
@@ -68,7 +68,7 @@
     <div class="pageoverflow">
         <p class="pagetext">{$field->prompt}</p>
         {if $field->extra}
-            <p class="pageinput">            
+            <p class="pageinput">
                 {$field->extra}
             </p>
         {/if}

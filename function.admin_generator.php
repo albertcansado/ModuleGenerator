@@ -42,7 +42,7 @@ foreach ($modules as $module) {
     if ($mod) {
         $onerow->modulelink = $mod->CreateImageLink($id, 'defaultadmin', $returnid, $mod->GetName(), 'icons/system/expand.gif', array(), '', '', false);
         $onerow->uninstalllink = '<a onclick="return confirm(\''.$this->Lang('areyousure').'\');" href="'.$config['admin_url'] . '/listmodules.php' . $urlext .'&action=uninstall&module='.$mod->GetName().'">'.$this->Lang('uninstall').'</a>';
-    }else{
+    } else {
         $onerow->installlink = '<a onclick="return confirm(\''.$this->Lang('areyousure').'\');" href="'.$config['admin_url'] . '/listmodules.php' . $urlext .'&action=install&module='.$module["module_name"].'">'.$this->Lang('install').'</a>';
     }
 

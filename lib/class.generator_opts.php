@@ -34,9 +34,7 @@ class generator_opts {
 
     public static $fielddefs;
 
-    public function __construct() {
-        
-    }
+    public function __construct() {}
 
     public static function init_admin($mod) {
 
@@ -152,7 +150,7 @@ class generator_opts {
         $route = new CmsRoute('/' . $mod->GetPreference('url_prefix', munge_string_to_url($mod->GetName(), true)) . '\/(?P<item_id>[0-9]+)\/(?P<junk>.*?)$/', $mod->GetName(), array('action' => 'detail', 'returnid' => $default_detailpage));
         cms_route_manager::add_static($route);
         $route = new CmsRoute('/' . $mod->GetPreference('url_prefix', munge_string_to_url($mod->GetName(), true)) . '\/(?P<item_id>[0-9]+)$/', $mod->GetName(), array('action' => 'detail', 'returnid' => $default_detailpage));
-        cms_route_manager::add_static($route);    
+        cms_route_manager::add_static($route);
     }
 
     public static function register_static_route($mod, $url, $item_id) {
@@ -242,10 +240,10 @@ class generator_opts {
         $row["category_alias"] = $category["category_alias"];
         $row['file_location'] = generator_tools::file_location($mod, $row);
 
-        
+
         // get custom fields
         if (isset($params['customfield']) && is_array($params['customfield'])) {
-            self::$fielddefs = $fielddefs = generator_fields::get_processed_fields_values($mod, $row["item_id"]);                    
+            self::$fielddefs = $fielddefs = generator_fields::get_processed_fields_values($mod, $row["item_id"]);
             foreach (self::$fielddefs as $field) {
                 self::$fielddefs[$field["fielddef_id"]] = $field;
             }
@@ -259,7 +257,7 @@ class generator_opts {
                 }
                 unset(self::$fielddefs[$key]);
             }
-        }           
+        }
     }
 
 }

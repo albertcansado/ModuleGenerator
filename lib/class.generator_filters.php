@@ -330,7 +330,7 @@ class generator_filters {
                             if (!empty($custom_fld['params']['category']) && strpos($custom_fld['params']['category'], '|') !== false) {
                                 $custom_fld['params']['category'] = str_replace('|', ',', $custom_fld['params']['category']);
                             }
-                            
+
                             $module->DoAction('default', $id, $custom_fld['params'], '');
 
                             $items = generator_tools::$items;

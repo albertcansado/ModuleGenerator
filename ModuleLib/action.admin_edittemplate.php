@@ -21,7 +21,7 @@ if (isset($params['tpl_id'])) {
 	$result = $db->Execute($query, array(
 		$tpl_id
 	));
-	
+
 	if ($result && $row = $result->FetchRow()) {
 		$templatename = $row['name'];
 		$templatetext = $row['content'];
@@ -35,11 +35,11 @@ if (isset($params['submit']) || isset($params['apply'])) {
 	if (!isset($tpl_id)) {
 		$templatetype = $params['template_type'];
 	}
-	
+
 	if ($templatename == '') {
 		$errors[] = $this->Lang('template_name_empty');
 	}
-	
+
 	if (empty($errors)) {
 		if (isset($tpl_id)) {
 			$query  = 'UPDATE ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_template SET name = ?, content=? WHERE tpl_id = ?';
@@ -59,11 +59,11 @@ if (isset($params['submit']) || isset($params['apply'])) {
 			));
 			if (!$result)
 				die('FATAL SQL ERROR: ' . $db->ErrorMsg() . '<br/>QUERY: ' . $db->sql);
-			
+
 			// populate $tpl_id for newly inserted item
 			$tpl_id = $db->Insert_ID();
 		}
-		
+
 		if (!isset($params['apply'])) {
 			$params = array(
 				'tab_message' => 'changessaved',

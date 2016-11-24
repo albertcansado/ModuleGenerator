@@ -20,7 +20,6 @@
         data = data.join(',');
         $('#fserialdata{/literal}{$section}{literal}').val(data);
       });
-  
     });
 
     </script>
@@ -71,7 +70,7 @@
             <p class="pageinput">
                 <input class="save_fields{$section}" type="submit" name="{$actionid}submit" value="{$tmpmod->Lang('save_order')}"/>
             </p>
-        </div>        
+        </div>
         {$tmpmod->CreateFormEnd()}</div>
 
 {/if}

@@ -13,7 +13,7 @@ function searchValueStartWith($array = array(), $neddle = '') {
         $k++;
         $haystack = $array[$k];
         $found = strpos($haystack, $neddle) === 0;
-        
+
     }
 
     return (!$found) ? -1 : $k;
@@ -23,14 +23,14 @@ function response($data = array(), $status = 'success') {
     // Clear handlers
     $handlers = ob_list_handlers();
     for ($cnt = 0; $cnt < sizeof($handlers); $cnt++) { ob_end_clean(); }
-    
+
     // Push Headers
     header('Pragma: public');
     header('Expires: 0');
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Cache-Control: private', false);
     header('Content-Type: application/json');
-    
+
     // Send Content
     echo json_encode(compact('status', 'data'));
 }
@@ -64,8 +64,8 @@ try {
 
     // Set option
     $options[$key] = $name;
-    
-    // 
+
+    //
     $optionsAux = '';
     foreach ($options as $key => $value) {
         if (!empty($optionsAux)) {
@@ -73,7 +73,7 @@ try {
         }
         $optionsAux .= $key . '=' . $value;
     }
-    
+
     $extra[searchValueStartWith($extra, 'options')] = 'options[' . $optionsAux . ']';
 
 

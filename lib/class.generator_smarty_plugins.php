@@ -46,7 +46,7 @@ class generator_smarty_plugins
 			$html
 		);
 	}
-	
+
 	public static function _showYoutube($id, $params = array())
 	{
 		$url = '//www.youtube.com/embed/{{id}}?rel=0&html5=1&showinfo=0&autohide=1';
@@ -90,6 +90,6 @@ class generator_smarty_plugins
     		return;
     	}
     	return $result;
-        
+
     }
 }

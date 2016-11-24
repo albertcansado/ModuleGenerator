@@ -10,8 +10,6 @@ if ($this->GetPreference('sortorder_simple', 'desc') == 'desc') {
     $data = (explode(',', $data));
 }
 
-
-
 $items = array();
 $sorting = 1;
 for ($i = 0; $i < count($data); $i++) {
@@ -21,7 +19,6 @@ for ($i = 0; $i < count($data); $i++) {
 
     $sorting++;
 
-    
     $item_id_old = isset($items[$sorting]) ? $items[$sorting] : null ;
 
     if ($item_id == $item_id_old)

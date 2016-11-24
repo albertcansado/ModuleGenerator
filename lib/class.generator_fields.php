@@ -35,9 +35,7 @@ class generator_fields {
     private static $_fields = array();
     private static $_fieldsvals = array();
 
-    public function __construct() {
-        
-    }
+    public function __construct() {}
 
     public static function get_fields($mod) {
         if (isset(self::$_fields[$mod->GetName()]))
@@ -129,7 +127,7 @@ class generator_fields {
     /**
      *
      * @param type $item_id
-     * @return string 
+     * @return string
      */
     public static function get_processed_fields_values($mod, $item_id, $section = 'items', $key = 'alias') {
 

@@ -61,7 +61,7 @@ if (isset($params["submit"])) {
     if (isset($params["attach"]) && is_array($params["attach"])) {
         $attach = implode(',', $params["attach"]);
     }
-    
+
     $update = generator_opts::updateattach($name, $attach);
 
     if ($update) {

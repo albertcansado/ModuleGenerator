@@ -1,4 +1,4 @@
-<div class="filter">                    
+<div class="filter">
     {$formstart}
     <fieldset>
            {if isset($custom_fielddef)}
@@ -26,7 +26,7 @@
     </fieldset>
     {$input_submit}
     {$formend}
-       
+
 </div>
 
 {if isset($results)}

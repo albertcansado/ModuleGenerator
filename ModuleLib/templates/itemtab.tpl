@@ -29,7 +29,7 @@
 
 <div class="form">
     {if $module->GetPreference('filter')}
-        {$formstart}   
+        {$formstart}
 
         <legend>{$module->Lang('filters')}:&nbsp;</legend>
 
@@ -56,7 +56,7 @@
         {if $module->GetPreference('filter_date')}
             <div class="pageoverflow">
                 <p class="pagetext">{$module->Lang('date')}</p>
-                <p class="pageinput">   
+                <p class="pageinput">
                     {$module->Lang('from')}
                 {capture assign="idfromdate"}{$module->GetActionId()}datefrom{/capture}
                 {html_select_date field_order=DMY prefix=$idfromdate time=$date_from start_year="-10" end_year="+1"}
@@ -114,7 +114,7 @@
             $(document).ready(function(){
                 $('#select_all_items').click(function(){
                     var checked = $(this).attr('checked');
-                    $('.multiselect').attr('checked',checked == undefined ? false : checked); 
+                    $('.multiselect').attr('checked',checked == undefined ? false : checked);
                 });
                 $('#bulkaction_submit').click(function(){
                     var len = $('#itemlist tbody input:checkbox:checked').length;
@@ -196,7 +196,7 @@
                         {/if}
                         {if isset($custom_fields)}
                             {foreach from=$custom_fields item='fid'}
-                                <td>                
+                                <td>
                                     {capture assign='tmp'}{literal}{{/literal}$entry->Fld__{$field_names.$fid}{literal}}{/literal}{/capture}
                                     {eval var=$tmp assign="tmpres"}
                                     {if isset($field_modules.$fid)}

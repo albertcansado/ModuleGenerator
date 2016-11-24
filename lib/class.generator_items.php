@@ -131,8 +131,6 @@ class generator_items {
 
         if (!isset($this->_rawdata["customfield"]) || !isset($this->_rawdata["item_id"]))
             return;
-        
-
 
         if (isset($this->_rawdata["customfield"])) {
             foreach ($this->_rawdata["customfield"] as $fldid => $value) {
