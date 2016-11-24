@@ -269,7 +269,7 @@ if (isset($params['preview'])) {
             // options
             if ($value != '' && isset($custom_flds[$fldid]['options'])) {
                 $validOpt = true;
-                
+
                 // Multiple or not...
                 if (isset($custom_flds[$fldid]['multiple']) && $custom_flds[$fldid]['multiple']) {
                     $validOpt = !array_diff_key(array_flip((array)$value), $custom_flds[$fldid]['options']);
@@ -451,7 +451,7 @@ if (isset($params['preview'])) {
                         unlink($file);
                     }
                 }
-                
+
                 $query = 'DELETE FROM ' . cms_db_prefix() . 'module_' . $this->_GetModuleAlias() . '_fieldval WHERE item_id = ? AND fielddef_id = ?';
                 $db->Execute($query, array($item_id, $k));
             }
