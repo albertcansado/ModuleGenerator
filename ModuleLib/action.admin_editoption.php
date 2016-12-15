@@ -9,23 +9,23 @@ if (!isset($params["tab"])) {
 }
 
 if ($params["tab"] == "mode") {
-
     $prefs = array();
 
-    $prefs[] = "summary_pagelimit";
     $prefs[] = "mode";
 
-    if ($params['mode'] == 'advanced') {
+    if ($params['mode'] === 'advanced') {
         $prefs[] = "sortorder_advanced";
         $prefs[] = "sortby_advanced";
-    }
-    if ($params['mode'] == 'simple') {
+        $prefs[] = "summary_pagelimit_advanced";
+    } else if ($params['mode'] === 'simple') {
         $prefs[] = "sortorder_simple";
         $prefs[] = "sortby_simple";
+        $prefs[] = "summary_pagelimit_simple";
     }
 
     extended_tools_opts::set_preferences($prefs, $params, $this);
 } else if ($params["tab"] == "optioneditingtab") {
+
     $prefs = array();
     $prefs[] = "has_gallery";
     $prefs[] = "gallery_sortorder";
@@ -49,6 +49,7 @@ if ($params["tab"] == "mode") {
 
     extended_tools_opts::set_preferences($prefs, $params, $this);
 } else if ($params["tab"] == "optionsearchtab") {
+
     $prefs = array();
     $prefs[] = "search_date_end";
     $prefs[] = "searchable";
@@ -61,7 +62,9 @@ if ($params["tab"] == "mode") {
             $db->Execute($query, array($custom_field, $fielddef_id));
         }
     }
+
 } else if ($params["tab"] == "optiontab") {
+
     $this->RemovePreference('custom_fields_default');
     if (isset($params["custom_fields_default"]))
         $this->SetPreference('custom_fields_default', implode(',', $params["custom_fields_default"]));
@@ -89,6 +92,20 @@ if ($params["tab"] == "mode") {
         foreach ($params['filter_custom_fields'] as $fielddef_id => $custom_field) {
             $db->Execute($query, array($custom_field, $fielddef_id));
         }
+    }
+
+    // Reset preferences when filter is disabled
+    if (!(bool)$params['filter']) {
+        $preferencesToDelete = [
+            $this->_GetModuleAlias() . '_children',
+            $this->_GetModuleAlias() . '_pagelimit',
+            $this->_GetModuleAlias() . '_sortby',
+            $this->_GetModuleAlias() . '_sortorder',
+            $this->_GetModuleAlias() . '_hierarchy',
+        ];
+        $query = 'DELETE FROM ' . cms_db_prefix() . 'userprefs WHERE preference IN (' . implode(', ', $preferencesToDelete) . ')';
+        $params['filter_categories'] = 0;
+        $params['filter_date'] = 0;
     }
 
     extended_tools_opts::set_preferences($prefs, $params, $this);

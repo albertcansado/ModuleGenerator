@@ -64,12 +64,15 @@ if (empty($fields_for_filter) == false) {
 //
 $hierarchy = get_preference($uid, $this->_GetModuleAlias() . '_hierarchy', '');
 $children = get_preference($uid, $this->_GetModuleAlias() . '_children', 0);
-$pagelimit = get_preference($uid, $this->_GetModuleAlias() . '_pagelimit', 25);
+$pagelimit = get_preference(
+    $uid,
+    $this->_GetModuleAlias() . '_pagelimit',
+    $this->GetPreference('summary_pagelimit_advanced', 25)
+);
 $sortby = get_preference($uid, $this->_GetModuleAlias() . '_sortby', 'item_date');
 $sortorder = get_preference($uid, $this->_GetModuleAlias() . '_sortorder', 'desc');
 $date_from = get_preference($uid, $this->_GetModuleAlias() . '_date_from', time() - (3600 * 24 * 7));
 $date_to = get_preference($uid, $this->_GetModuleAlias() . '_date_to', time() + (3600 * 24 * 7));
-
 
 
 if (empty($tmp))
@@ -88,7 +91,6 @@ if (isset($params['pagenumber'])) {
 // Handle form submit
 //
 if (isset($params['submit'])) {
-
     if ($this->GetPreference('mode') != "simple") {
         $pagelimit = (int) $params['input_pagelimit'];
         $sortby = trim($params['input_sortby']);
@@ -125,10 +127,10 @@ if (isset($params['submit'])) {
 
 
 // if simple mode, reset all prefs
-if ($this->GetPreference('mode') == "simple") {
+if ($this->GetPreference('mode') === "simple") {
     $sortorder = $this->GetPreference('sortorder_simple', 'desc');
     $sortby = $this->GetPreference('sortby_simple', 'position');
-    $pagelimit = $this->GetPreference('pagelimit_simple', 1000);
+    $pagelimit = $this->GetPreference('summary_pagelimit_simple', 1000);
 }
 // get category list
 $where = array();
