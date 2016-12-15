@@ -1,14 +1,14 @@
 /*
   KeyValue
   Version: 1.2
-  
+
   Albert Cansado Sola
   @albertcansado
 */
 var KeyValue = (function () {
 
 	"use strict";
-	
+
 	var defaultOptions = {
 		table: null,
 		btn: null,
@@ -385,7 +385,7 @@ KeyValue.prototype._updateRow = function () {
 
 	var col1 = utils.getCol(tr, 0);
 	var col2 = utils.getCol(tr, 1);
-	
+
 	var trId = tr.dataset.id;
 
     //Get New Values
@@ -395,7 +395,7 @@ KeyValue.prototype._updateRow = function () {
 
     //Get Old values
     var oldValue = utils.format(this.options.formatText, trId, this._editingValue('beforeInput1'), this._editingValue('beforeInput2'));
-    
+
     //Update Hidden
     this.options.hiddenInput.value = this.options.hiddenInput.value.replace(oldValue, toSave);
 
@@ -491,7 +491,7 @@ KeyValue.prototype.onClickEdit = function (event) {
 
 	/* Creem inputs */
 	this._createInlineEdit();
-	
+
 	/* Afegim btn Save & Cancel */
 	var td = utils.getCol(event.target);
 	utils.insert(td, this._createSaveBtn());
@@ -535,7 +535,7 @@ KeyValue.prototype.onClickSaveOrder = function (event) {
           newText += this.getRowValue(this.options.table.rows[i]);
           newText += (j - i > 1) ? ';' : '';
         }
-        
+
         utils.setValue(this.options.hiddenInput, newText);
 };
 
@@ -601,6 +601,6 @@ KeyValue.prototype.removeRow = function (tr) {
 	}
 	return true;
 };
-	
+
 	return KeyValue;
 }());
