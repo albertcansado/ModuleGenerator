@@ -163,7 +163,7 @@
                                 <th>{$fields_viewable.$fid}</th>
                             {/foreach}
                         {/if}
-                        {if $mod->GetPreference('item_featured_edit')}
+                        {if $module->GetPreference('item_featured_edit')}
                             <th class="pageicon">{$module->Lang('featured')}</th>
                         {/if}
                         <th class="pageicon">&nbsp;</th>
@@ -176,9 +176,7 @@
                 </thead>
                 <tbody>
                 {foreach from=$items item=entry}
-                    {cycle values="row1,row2" assign='rowclass'}
-                    {*<tr class="{$rowclass}" onmouseover="this.className='{$rowclass}hover';" onmouseout="this.className='{$rowclass}';">*}
-                    <tr id="{$entry->item_id}">
+                    <tr id="{$entry->item_id}" class="{cycle values='row1,row2'}">
                         <td>{$entry->item_id}</td>
                         {if $module->GetPreference('item_title_edit')}
                             <td>
@@ -227,7 +225,7 @@
                                 </td>
                             {/foreach}
                         {/if}
-                        {if $mod->GetPreference('item_featured_edit')}
+                        {if $module->GetPreference('item_featured_edit')}
                             <td>{$entry->featured}</td>
                         {/if}
                         <td>{$entry->approve}</td>
