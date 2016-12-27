@@ -32,7 +32,23 @@ $smarty->assign('prompt_has_admin', $this->Lang('prompt_has_admin'));
 $smarty->assign('input_has_admin', $this->CreateInputCheckbox($id, 'has_admin', 1, $this->GetPreference('has_admin')));
 
 $smarty->assign('prompt_admin_section', $this->Lang('prompt_admin_section'));
-$smarty->assign('input_admin_section', $this->CreateInputText($id, 'admin_section', $this->GetPreference('admin_section', 'content'), 50));
+$smarty->assign(
+    'input_admin_section',
+    $this->CreateInputDropdown(
+        $id,
+        'admin_section',
+        [
+            lang('content') => 'content',
+            lang('layout') => 'layout',
+            lang('usersgroups') => 'usersgroups',
+            lang('extensions') => 'extensions',
+            lang('siteadmin') => 'siteadmin',
+            lang('ecommerce') => 'ecommerce'
+        ],
+        -1,
+        $this->GetPreference('admin_section', 'content')
+    )
+);
 
 
 $contentops = cmsms()->GetContentOperations();
