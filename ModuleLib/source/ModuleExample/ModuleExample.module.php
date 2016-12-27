@@ -145,7 +145,7 @@ class ModuleExample extends ModuleGenerator {
                 }
 
                 //include framework
-                $files = array();
+                $files = [];
                 $files[] = cms_join_path($config['root_path'], 'modules', $this->GetName(), 'action.' . $name . '.php');
                 $files[] = cms_join_path(GENERATOR_MODLIB_PATH, 'action.' . $name . '.php');
 
