@@ -80,7 +80,7 @@ class ModuleGenerator extends CGExtensions {
     }
 
     public function GetVersion() {
-        return '3.0.5';
+        return '3.0.6';
     }
 
     public function AllowAutoUpgrade() {
@@ -92,11 +92,11 @@ class ModuleGenerator extends CGExtensions {
     }
 
     public function GetAuthor() {
-        return '@kuzmany';
+        return '@albertcansado';
     }
 
     public function GetAuthorEmail() {
-        return 'zdeno@kuzmany.biz';
+        return '';
     }
 
     public function GetChangeLog() {
