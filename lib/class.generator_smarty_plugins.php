@@ -34,24 +34,45 @@ require __DIR__ . '/class.generator_stringtemplate.php';
 
 class generator_smarty_plugins
 {
+	public static $youtubeTags = ['autoplay', 'cc_load_policy', 'color', 'controls', 'disablekb', 'enablejsapi', 'end', 'fs', 'hl', 'iv_load_policy', 'list', 'listType', 'loop', 'mute', 'modestbranding', 'origin', 'playlist', 'playsinline', 'rel', 'showinfo', 'start', 'autohide'];
+
+	public static function _urlAttrs($params = [], $allowed = [])
+	{
+		$attributes = array_intersect_key($params, array_flip($allowed));
+		$parameters = [''];
+		foreach ($attributes as $key => $value) {
+			$parameters[] = sprintf('%s=%s', $key, $value);
+		}
+
+		if (count($parameters) === 1) {
+			return '';
+		}
+
+		return implode('&', $parameters);
+	}
+
 	public static function _videoIframe($url = '', $params = array())
 	{
 		$html = '<iframe type="text/html" src="{{src}}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen{{attr}}></iframe>';
 		return str_replace(
-			array('{{src}}', '{{attr}}'),
-			array(
+			[ '{{src}}', '{{attr}}' ],
+			[
 				$url,
-				(new StringTemplate())->formatAttributes($params)
-			),
+				(new StringTemplate())->formatAttributes($params, self::$youtubeTags)
+			],
 			$html
 		);
 	}
 
 	public static function _showYoutube($id, $params = array())
 	{
-		$url = '//www.youtube.com/embed/{{id}}?rel=0&html5=1&showinfo=0&autohide=1';
+		$url = '//www.youtube.com/embed/{{id}}?rel=0&html5=1&showinfo=0&autohide=1{{urlAttr}}';
 		return self::_videoIframe(
-			str_replace('{{id}}', $id, $url),
+			str_replace(
+				[ '{{id}}', '{{urlAttr}}' ],
+				[ $id, self::_urlAttrs($params, self::$youtubeTags) ],
+				$url
+			),
 			$params
 		);
 	}
