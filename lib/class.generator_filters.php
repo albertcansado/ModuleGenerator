@@ -81,7 +81,7 @@ class generator_filters {
                         break;
 
                     case 'dropdownfrommodule':
-                        $custom_flds[$custom_fld]['options'] = generator_tools::get_extra_moduleoptions($instructions, $mod);
+                        $custom_flds[$custom_fld]['options'] = generator_tools::get_extra_moduleoptions($instructions, $this->_mod);
                         break;
 
                     case 'module':
