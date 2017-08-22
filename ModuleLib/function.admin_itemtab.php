@@ -36,6 +36,7 @@ $fields_viewable = array();
 $field_names = array();
 $field_modules = array();
 $field_images = array();
+$fields_checkbox = array();
 $custom_fields = '';
 $date_to = time();
 
@@ -170,11 +171,14 @@ if (is_array($all_fields)) {
                     if (is_array($custommoduleparams) && !empty($custommoduleparams) && cms_utils::get_module($custommoduleparams["module"])) {
                         $field_modules[$all_fields[$i]['fielddef_id']] = $custommoduleparams["module"];
                     }
-                }
-                // if module, get module func
-                if ($all_fields[$i]['type'] == "upload_file") {
+                } else if ($all_fields[$i]['type'] == "upload_file") {
+                    // Image file
                     $field_images[$all_fields[$i]['fielddef_id']] = 1;
+                } else if ($all_fields[$i]['type'] === 'checkbox') {
+                    // Checkbox
+                    $fields_checkbox[$all_fields[$i]['fielddef_id']] = 1;
                 }
+
                 break;
         }
     }
@@ -198,6 +202,7 @@ if (count($fields_viewable)) {
     $smarty->assign('field_names', $field_names);
     $smarty->assign('field_modules', $field_modules);
     $smarty->assign('field_images', $field_images);
+    $smarty->assign('fields_checkbox', $fields_checkbox);
 }
 
 $smarty->assign('custom_fields', $custom_fields);

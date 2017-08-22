@@ -219,6 +219,8 @@
                                         {else}
                                             <a href="{$entry->file_location}/{$tmpres}">{$tmpres}</a>
                                         {/if}
+                                    {elseif isset($fields_checkbox.$fid)}
+                                        <img src="themes/OneEleven/images/icons/system/{if $tmpres}true{else}false{/if}.gif" class="systemicon" />
                                     {else}
                                         {$tmpres}
                                     {/if}
