@@ -117,7 +117,21 @@ class generator_fields {
         self::$_fieldsvals[$tmp_id] = $fieldvals;
         if (isset($params['customfield'])) {
             foreach ($params['customfield'] as $fldid => $value) {
-                $fieldvals[$fldid]['value'] = (empty($value) == true ? '' : (is_array($value) ? implode(',', $value) : $value));
+                if (!isset($fieldvals[$fldid])) {
+                    continue;
+                }
+
+                if ($fieldvals[$fldid]['type'] === 'checkbox') {
+                    $fieldvals[$fldid]['value'] = $value;
+                } else {
+                    if (empty($value)) {
+                        $fieldvals[$fldid]['value'] = '';
+                    } else if (is_array($value)) {
+                        $fieldvals[$fldid]['value'] = implode(',', $value);
+                    } else {
+                        $fieldvals[$fldid]['value'] = $value;
+                    }
+                }
             }
         }
 
